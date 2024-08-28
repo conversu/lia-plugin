@@ -6,7 +6,7 @@ import App from './App.tsx'
 import { Parent } from '@services/parent/index.ts';
 
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById('conversu-plugin')!).render(
   <StrictMode>
     <BrowserRouter>
       <ThemeProvider>

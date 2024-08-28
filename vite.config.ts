@@ -5,4 +5,14 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
+  build: {
+    rollupOptions: {
+      output: {
+        // Output a single bundle
+        entryFileNames: `index.js`,
+        chunkFileNames: `index.js`,
+        assetFileNames: `index.js`,
+      }
+    }
+  }
 })
