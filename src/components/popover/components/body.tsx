@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { usePopoverContext } from "../provider/hook";
 
@@ -20,10 +20,31 @@ export default function PopoverBody({ children }: Props) {
             h={`${height - headerSize - footerSize}px)`}
             flexDir='column'
             align='center'
-            justify='center'
+            justify='flex-start'
+            overflowY='auto'
+            __css={{
+                '::-webkit-scrollbar': {
+                    'width': '4px'
+                },
+                /* Track */
+                '::-webkit-scrollbar-track': {
+                    'background': useColorModeValue('white', 'gray.600')
+                },
+                /* Handle */
+                '::-webkit-scrollbar-thumb': {
+                    'background': useColorModeValue('gray.100', 'gray.800'),
+                    'borderRadius': '8px',
+                    'cursor': 'pointer'
+                },
+                /* Handle on hover */
+                '::-webkit-scrollbar-thumb:hover': {
+                    'background': useColorModeValue('gray.200', 'gray.900')
+                }
+            }}
         >
+            <Box id='body-top' w='100%' />
             {children}
+            <Box id='body-bottom' w='100%' />
         </Flex>
-
     );
 }

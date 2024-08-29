@@ -9,7 +9,7 @@ interface Props {
 }
 export default function PopoverHeader({ title, subtitle }: Props) {
 
-    const { onToggle } = usePopoverContext();
+    // const { onToggle } = usePopoverContext();
 
     return (
         <Center w='100%' px='.5rem' id='popover-header'>
@@ -32,11 +32,11 @@ export default function PopoverHeader({ title, subtitle }: Props) {
                     <Text
                         as='h1'
                         fontSize={{
-                            base: '1.25rem',
-                            sm: '1.25rem',
-                            md: '1.25rem',
-                            lg: '1.5rem',
-                            xl: '1.5rem'
+                            base: '1rem',
+                            sm: '1.15rem',
+                            md: '1.15rem',
+                            lg: '1.25rem',
+                            xl: '1.25rem'
                         }}
                         fontWeight='bold'
                         w='100%'
@@ -56,7 +56,7 @@ export default function PopoverHeader({ title, subtitle }: Props) {
                     align='flex-start'
                     justify='flex-end'
                 >
-                    <IconButton
+                    {/* <IconButton
                         icon={<Icon as={FiX} fontSize='1.5rem' />}
                         aria-label="Open"
                         rounded='full'
@@ -71,7 +71,7 @@ export default function PopoverHeader({ title, subtitle }: Props) {
                             border: 'none',
                             color: 'app.orange'
                         }}
-                    />
+                    /> */}
                 </Flex>
             </Grid>
         </Center>

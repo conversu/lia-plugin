@@ -15,8 +15,6 @@ export default function PluginContainer({ children, props }: PluginContainerProp
             bottom='2'
             right='2'
             zIndex={3000}
-            maxW='416px'
-            maxH='616px'
             p='.5rem'
             border='1px solid red'
             {...props}

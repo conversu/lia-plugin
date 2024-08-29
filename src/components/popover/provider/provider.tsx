@@ -4,13 +4,12 @@ import { PopoverContext } from "./context";
 
 interface Props {
     children: ReactNode;
+    height: number;
 }
 
-export default function PopoverProvider({ children }: Props) {
+export default function PopoverProvider({ height, children }: Props) {
 
     const [isExpanded, setIsExpanded] = useState(false);
-
-    const height = 600;
 
 
     return (

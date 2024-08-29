@@ -1,59 +1,59 @@
 {
     "compilerOptions": {
         "outDir": "./dist/",
-        // "paths": {
-        //     "@assets/*": [
-        //         "./src/assets/*"
-        //     ],
-        //     "@components/*": [
-        //         "./src/components/*"
-        //     ],
-        //     "@constants/*": [
-        //         "./src/constants/*"
-        //     ],
-        //     "@helpers/*": [
-        //         "./src/helpers/*"
-        //     ],
-        //     "@hooks/*": [
-        //         "./src/hooks/*"
-        //     ],
-        //     "@navigation/*": [
-        //         "./src/navigation/*"
-        //     ],
-        //     "@contexts/*": [
-        //         "./src/contexts/*"
-        //     ],
-        //     "@providers/*": [
-        //         "./src/providers/*"
-        //     ],
-        //     "@pages/*": [
-        //         "./src/pages/*"
-        //     ],
-        //     "@theme/*": [
-        //         "./src/theme/*"
-        //     ],
-        //     "@utils/*": [
-        //         "./src/utils/*"
-        //     ],
-        //     "@lib/*": [
-        //         "./src/lib/*"
-        //     ],
-        //     "@routes/*": [
-        //         "./src/routes/*"
-        //     ],
-        //     "@services/*": [
-        //         "./src/services/*"
-        //     ],
-        //     "@apis/*": [
-        //         "./src/apis/*"
-        //     ],
-        //     "_types/*": [
-        //         "./src/types/*"
-        //     ],
-        //     "@cte/*": [
-        //         "./src/cte/*"
-        //     ]
-        // },
+        "paths": {
+            "@assets/*": [
+                "./src/assets/*"
+            ],
+            "@components/*": [
+                "./src/components/*"
+            ],
+            "@constants/*": [
+                "./src/constants/*"
+            ],
+            "@helpers/*": [
+                "./src/helpers/*"
+            ],
+            "@hooks/*": [
+                "./src/hooks/*"
+            ],
+            "@navigation/*": [
+                "./src/navigation/*"
+            ],
+            "@contexts/*": [
+                "./src/contexts/*"
+            ],
+            "@providers/*": [
+                "./src/providers/*"
+            ],
+            "@pages/*": [
+                "./src/pages/*"
+            ],
+            "@theme/*": [
+                "./src/theme/*"
+            ],
+            "@utils/*": [
+                "./src/utils/*"
+            ],
+            "@lib/*": [
+                "./src/lib/*"
+            ],
+            "@routes/*": [
+                "./src/routes/*"
+            ],
+            "@services/*": [
+                "./src/services/*"
+            ],
+            "@apis/*": [
+                "./src/apis/*"
+            ],
+            "_types/*": [
+                "./src/types/*"
+            ],
+            "@cte/*": [
+                "./src/cte/*"
+            ]
+        },
         "sourceMap": true,
         "noImplicitAny": true,
         "module": "commonjs",

@@ -1,28 +1,22 @@
-import { Center, Input } from '@chakra-ui/react';
+import { Input } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { ThemeProvider } from './theme/theme.provider';
 import { Plugin } from './components/plugin';
 
 
-function App(props: any) {
+interface Props {
+  token: string;
+}
 
+function App(props: Props) {
 
-  useEffect(() => {
-
-  }, [])
-
-  const handleNewUserMessage = (message: any) => {
-    console.log('new message:', message)
-  }
-
-  const [isOpened, setIsOpened] = useState(false);
 
   return (
     <ThemeProvider>
       <Plugin.Container>
         <Plugin.Popover.Container>
           <Plugin.Popover.Content>
-            <Plugin.Popover.Header
+            {/* <Plugin.Popover.Header
               title='title'
               subtitle='subtitle'
             />
@@ -31,7 +25,14 @@ function App(props: any) {
             </Plugin.Popover.Body>
             <Plugin.Popover.Footer>
               <Input w='100%' />
-            </Plugin.Popover.Footer>
+            </Plugin.Popover.Footer> */}
+            <iframe
+              src="https://stage.chat.conversuai.com.br/conversu"
+              style={{
+                width: '100%',
+                height: '100%'
+              }}
+            />
           </Plugin.Popover.Content>
           <Plugin.Popover.Button />
         </Plugin.Popover.Container>
