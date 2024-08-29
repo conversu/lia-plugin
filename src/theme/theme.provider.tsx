@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
 import {
-    global,
+    // global,
     themeLight,
     grayScale,
     conversuColors,
@@ -25,7 +25,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
     const themeProps = isDarkTheme ? themeLight : themeLight;
     const bg = isDarkTheme ? grayScale[900] : grayScale[50];
-    const color = isDarkTheme ? '#FFFFFF' : conversuColors.purple;
+    const color = isDarkTheme ? 'gray.500' : conversuColors.purple;
 
     function setVw() {
         const vw = document.documentElement.clientWidth / 100;
@@ -51,20 +51,20 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     const theme = extendTheme({
         initialColorMode: isDarkTheme ? 'dark' : 'light',
         useSystemColorMode: false,
-        styles: {
-            global: {
-                body: {
-                    ...global,
-                    bg: bg,
-                    color: color,
-                },
-                html: {
-                    ...global,
-                    bg: bg,
-                    color: color,
-                }
-            },
-        },
+        // styles: {
+        //     global: {
+        //         body: {
+        //             ...global,
+        //             bg: 'transparent',
+        //             color: color,
+        //         },
+        //         html: {
+        //             ...global,
+        //             bg: 'transparent',
+        //             color: color,
+        //         }
+        //     },
+        // },
         ...themeProps
     });
 

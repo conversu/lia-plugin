@@ -1,6 +1,6 @@
 import { TextProps } from '@chakra-ui/react';
-import { isMobileDevice } from '@utils/utils';
 import { IBotLayoutProps } from './theme.types';
+import { isMobileDevice } from '../utils/utils';
 
 
 const breakpoints = {

@@ -1,84 +1,70 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@assets/*": [
-        "./src/assets/*"
-      ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@constants/*": [
-        "./src/constants/*"
-      ],
-      "@helpers/*": [
-        "./src/helpers/*"
-      ],
-      "@hooks/*": [
-        "./src/hooks/*"
-      ],
-      "@navigation/*": [
-        "./src/navigation/*"
-      ],
-      "@contexts/*": [
-        "./src/contexts/*"
-      ],
-      "@providers/*": [
-        "./src/providers/*"
-      ],
-      "@pages/*": [
-        "./src/pages/*"
-      ],
-      "@theme/*": [
-        "./src/theme/*"
-      ],
-      "@utils/*": [
-        "./src/utils/*"
-      ],
-      "@lib/*": [
-        "./src/lib/*"
-      ],
-      "@router/*": [
-        "./src/router/*"
-      ],
-      "@styles/*": [
-        "./src/styles/*"
-      ],
-      "@services/*": [
-        "./src/services/*"
-      ],
-      "@clients/*": [
-        "./src/clients/*"
-      ]
+    "compilerOptions": {
+        "outDir": "./dist/",
+        // "paths": {
+        //     "@assets/*": [
+        //         "./src/assets/*"
+        //     ],
+        //     "@components/*": [
+        //         "./src/components/*"
+        //     ],
+        //     "@constants/*": [
+        //         "./src/constants/*"
+        //     ],
+        //     "@helpers/*": [
+        //         "./src/helpers/*"
+        //     ],
+        //     "@hooks/*": [
+        //         "./src/hooks/*"
+        //     ],
+        //     "@navigation/*": [
+        //         "./src/navigation/*"
+        //     ],
+        //     "@contexts/*": [
+        //         "./src/contexts/*"
+        //     ],
+        //     "@providers/*": [
+        //         "./src/providers/*"
+        //     ],
+        //     "@pages/*": [
+        //         "./src/pages/*"
+        //     ],
+        //     "@theme/*": [
+        //         "./src/theme/*"
+        //     ],
+        //     "@utils/*": [
+        //         "./src/utils/*"
+        //     ],
+        //     "@lib/*": [
+        //         "./src/lib/*"
+        //     ],
+        //     "@routes/*": [
+        //         "./src/routes/*"
+        //     ],
+        //     "@services/*": [
+        //         "./src/services/*"
+        //     ],
+        //     "@apis/*": [
+        //         "./src/apis/*"
+        //     ],
+        //     "_types/*": [
+        //         "./src/types/*"
+        //     ],
+        //     "@cte/*": [
+        //         "./src/cte/*"
+        //     ]
+        // },
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "target": "es5",
+        "jsx": "react-jsx",
+        "allowJs": true,
+        "moduleResolution": "node",
+        "strictNullChecks": true,
+        "esModuleInterop": true,
     },
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": [
-    "src"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
+    "include": [
+        "src"
+    ]
 }
