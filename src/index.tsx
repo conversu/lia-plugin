@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import { PluginProvider } from '@services/plugin/provider';
 
 
 const div = document.getElementById('conversu-plugin')
@@ -8,6 +9,14 @@ const div = document.getElementById('conversu-plugin')
 const root = ReactDOM.createRoot(div!);
 root.render(
     <React.StrictMode>
-        {div && (<App {...div.dataset} />)}
+        {div && (
+            <PluginProvider
+                token={div.dataset.token}
+            >
+                <App
+                    allowDarkTheme={div.dataset['allow-dark-theme']?.toLowerCase() === "true"}
+                />
+            </PluginProvider>
+        )}
     </React.StrictMode>
 );

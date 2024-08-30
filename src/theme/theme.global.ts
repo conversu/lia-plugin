@@ -1,6 +1,6 @@
 import { TextProps } from '@chakra-ui/react';
 import { IBotLayoutProps } from './theme.types';
-import { isMobileDevice } from '../utils/utils';
+import { isMobileDevice } from '@utils/utils';
 
 
 const breakpoints = {
@@ -200,6 +200,7 @@ export const scrollbarStyle = {
             thumbHover: grayScale[500],
         },
         large: {
+            borderRadius: '0.25rem',
             width: '0.6rem',
             track: grayScale[700],
             thumb: grayScale[800],
@@ -214,6 +215,7 @@ export const scrollbarStyle = {
             thumbHover: grayScale[200],
         },
         large: {
+            borderRadius: '0.25rem',
             width: '0.6rem',
             track: 'white',
             thumb: grayScale[100],

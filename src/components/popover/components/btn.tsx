@@ -1,12 +1,14 @@
 import { Icon, IconButton } from "@chakra-ui/react";
 import { FiSmile, FiX } from "react-icons/fi";
 import { usePopoverContext } from "../provider/hook";
+import { Chat } from "@conversu/chat";
 
 
 
 export default function PopoverButton() {
 
     const { isExpanded, onToggle } = usePopoverContext();
+    const { layout } = Chat.Theme.use();
 
     return (
         <IconButton
@@ -18,7 +20,11 @@ export default function PopoverButton() {
             color='white'
             cursor='pointer'
             colorScheme='purple'
-            bg='app.orange'
+            bg={layout.colors.primary}
+            _hover={{
+                bg: layout.colors.secondary,
+                color: 'white'
+            }}
         />
     );
 }

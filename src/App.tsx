@@ -1,37 +1,31 @@
-import { Input } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
 import { ThemeProvider } from './theme/theme.provider';
 import { Plugin } from './components/plugin';
+import { usePlugin } from '@services/plugin/hook';
+import { Lia } from '@components/Lia';
 
 
 interface Props {
-  token: string;
+  allowDarkTheme?: boolean;
 }
 
-function App(props: Props) {
+function App({
+  allowDarkTheme = false
+}: Props) {
 
+  const { bot, url } = usePlugin();
 
   return (
-    <ThemeProvider>
+    <ThemeProvider
+      allowDarkTheme={allowDarkTheme}
+      layout={bot.layout}
+    >
       <Plugin.Container>
         <Plugin.Popover.Container>
           <Plugin.Popover.Content>
-            {/* <Plugin.Popover.Header
-              title='title'
-              subtitle='subtitle'
-            />
-            <Plugin.Popover.Body>
-              body
-            </Plugin.Popover.Body>
-            <Plugin.Popover.Footer>
-              <Input w='100%' />
-            </Plugin.Popover.Footer> */}
-            <iframe
-              src="https://stage.chat.conversuai.com.br/conversu"
-              style={{
-                width: '100%',
-                height: '100%'
-              }}
+            <Lia
+              allowDarkTheme={allowDarkTheme}
+              bot={bot}
+              src={url}
             />
           </Plugin.Popover.Content>
           <Plugin.Popover.Button />

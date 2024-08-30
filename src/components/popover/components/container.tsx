@@ -14,12 +14,13 @@ export default function Container({
 
     return (
         <PopoverProvider
-            height={500}
+            height={700}
         >
             <Flex
                 h='100%'
                 w='100%'
-                maxW='450px'
+                minW='500px'
+                maxW='500px'
                 maxH='650px'
                 flexDir='column'
                 align='flex-end'
