@@ -6,9 +6,13 @@ import { Lia } from '@components/Lia';
 
 interface Props {
   allowDarkTheme?: boolean;
+  height?: string;
+  width?: string;
 }
 
 function App({
+  height = '700',
+  width = '450',
   allowDarkTheme = false
 }: Props) {
 
@@ -20,7 +24,10 @@ function App({
       layout={bot.layout}
     >
       <Plugin.Container>
-        <Plugin.Popover.Container>
+        <Plugin.Popover.Container
+          height={Number(height)}
+          width={Number(width)}
+        >
           <Plugin.Popover.Content>
             <Lia
               allowDarkTheme={allowDarkTheme}

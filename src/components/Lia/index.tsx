@@ -30,6 +30,10 @@ export function Lia({
             title='conversu-plugin'
             width='100%'
             height='100%'
+            style={{
+                border: 'none',
+                borderRadius: '.75rem .75rem 0rem .75rem'
+            }}
         />
     )
 }
