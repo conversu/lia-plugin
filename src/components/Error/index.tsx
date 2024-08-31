@@ -1,4 +1,4 @@
-import { Button, Center, Flex, Icon, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Portal, Text } from "@chakra-ui/react";
+import { BoxProps, Button, Center, Flex, Icon, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Portal, Text } from "@chakra-ui/react";
 import { ThemeProvider } from "../../theme/theme.provider";
 import { Plugin } from "../plugin";
 import { BiError } from "react-icons/bi";
@@ -6,15 +6,19 @@ import { BiError } from "react-icons/bi";
 interface Props {
     error: string | null;
     onReload: (...args: any[]) => any;
+    dataSet?: any;
+    props?: BoxProps;
 }
 
 
-export function Error({ error, onReload }: Props) {
+export function Error({ error, onReload, props }: Props) {
 
 
     return (
         <ThemeProvider>
-            <Plugin.Container>
+            <Plugin.Container
+                props={props}
+            >
                 <Popover>
                     <PopoverTrigger>
                         <Button

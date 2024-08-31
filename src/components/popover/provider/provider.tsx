@@ -7,10 +7,12 @@ interface Props {
     height: number;
 }
 
-export default function PopoverProvider({ height, children }: Props) {
+export default function PopoverProvider({ 
+    height, 
+    children
+ }: Props) {
 
     const [isExpanded, setIsExpanded] = useState(false);
-
 
     return (
         <PopoverContext.Provider value={{

@@ -4,11 +4,15 @@ object-assign
 @license MIT
 */
 
+/*! ../../../services/plugin/hook */
+
 /*! ../../../theme/theme.global */
 
 /*! ../../components/Error */
 
 /*! ../../components/plugin */
+
+/*! ../../services/plugin/hook */
 
 /*! ../../theme/theme.hook */
 

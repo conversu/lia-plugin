@@ -1,6 +1,7 @@
 import { Box, Flex, SlideFade, useColorModeValue } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { usePopoverContext } from "../provider/hook";
+import { usePlugin } from "../../../services/plugin/hook";
 
 interface Props {
     children: ReactNode;
@@ -10,6 +11,7 @@ interface Props {
 function Content({ children, border }: Props) {
 
     const { isExpanded, height } = usePopoverContext();
+    const { borderRadius } = usePlugin();
 
     return (
         <Box w='100%' h='100%'>
@@ -21,7 +23,7 @@ function Content({ children, border }: Props) {
                     align='center'
                     justify='space-between'
                     bg={useColorModeValue('gray.50', 'gray.600')}
-                    borderRadius='.75rem .75rem 0rem .75rem'
+                    borderRadius={borderRadius}
                     boxShadow='lg'
                     borderColor={useColorModeValue(border ? border : 'gray.100', border ? border : 'gray.800')}
                     borderWidth={border === 'none' ? '0px' : '1px'}

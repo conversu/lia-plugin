@@ -10,6 +10,7 @@ interface Props {
   width?: string;
   color?: string;
   border?: string;
+  zIndex?: number;
 }
 
 function App({
@@ -17,17 +18,23 @@ function App({
   width = '450',
   allowDarkTheme = false,
   color,
-  border
+  border,
+  zIndex = 9998
 }: Props) {
 
   const { bot, url } = usePlugin();
+
 
   return (
     <ThemeProvider
       allowDarkTheme={allowDarkTheme}
       layout={bot.layout}
     >
-      <Plugin.Container>
+      <Plugin.Container
+        props={{
+          zIndex
+        }}
+      >
         <Plugin.Popover.Container
           height={Number(height)}
           width={Number(width)}

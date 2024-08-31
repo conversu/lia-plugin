@@ -1,5 +1,6 @@
 import { Box, BoxProps } from "@chakra-ui/react";
 import { ReactNode } from "react";
+import { usePlugin } from "../../../services/plugin/hook";
 
 export interface PluginContainerProps {
     children: ReactNode;
@@ -7,16 +8,20 @@ export interface PluginContainerProps {
 }
 
 
-export default function PluginContainer({ children, props }: PluginContainerProps) {
+export default function PluginContainer({
+    children,
+    props
+}: PluginContainerProps) {
+
+    const { containerPositionProps } = usePlugin();
+
 
     return (
         <Box
-            position='absolute'
-            bottom='2'
-            right='2'
+            position='fixed'
             zIndex={9998}
             p='.5rem'
-            // border='1px solid red'
+            {...containerPositionProps}
             {...props}
         >
             {children}

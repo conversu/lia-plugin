@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Flex } from "@chakra-ui/react";
 
 import PopoverProvider from "../provider/provider";
+import { usePlugin } from "../../../services/plugin/hook";
 
 
 
@@ -17,6 +18,8 @@ export default function Container({
     children
 }: Props) {
 
+    const { contentPositionProps } = usePlugin();
+
 
     return (
         <PopoverProvider
@@ -26,10 +29,8 @@ export default function Container({
                 h='100%'
                 w={`${width}px`}
                 maxH={`${height + 32}px`}
-                flexDir='column'
-                align='flex-end'
-                justify='flex-end'
                 gap='.5rem'
+                {...contentPositionProps}
             >
                 {children}
             </Flex>

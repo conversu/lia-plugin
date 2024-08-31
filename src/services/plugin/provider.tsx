@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react"
-import { SkeletonCircle } from "@chakra-ui/react";
+import { BoxProps, FlexProps, SkeletonCircle } from "@chakra-ui/react";
 import axios, { AxiosError } from "axios";
 
 import { PluginContext } from "./context";
@@ -9,13 +9,15 @@ import { Plugin } from "../../components/plugin";
 import { ThemeProvider } from "../../theme/theme.provider";
 import { IBot } from "../../@types/bot";
 import { Error } from "../../components/Error";
+import { PluginPosition } from "../../@types/plugin";
 
 
 interface Props {
     token?: string
     children: ReactNode;
     displayError?: boolean;
-    dataSet: unknown;
+    dataSet: any;
+    position?: PluginPosition;
 }
 
 
@@ -24,6 +26,7 @@ export function PluginProvider({
     children,
     displayError = false,
     dataSet,
+    position = 'bottom-right'
 }: Props) {
 
     const bot = useRef<IBot | null>(null);
@@ -85,7 +88,71 @@ export function PluginProvider({
 
     useEffect(() => {
         authorize(token);
-    }, [authorize, token])
+    }, [authorize, token]);
+
+
+    const containerPositionProps = {
+        'bottom-left': {
+            bottom: '2',
+            left: '2'
+        } as Partial<BoxProps>,
+        'bottom-right': {
+            bottom: '2',
+            right: '2'
+        } as Partial<BoxProps>,
+        'top-right': {
+            top: '2',
+            right: '2'
+        } as Partial<BoxProps>,
+        'top-left': {
+            top: '2',
+            left: '2',
+        } as Partial<BoxProps>,
+        // 'bottom': {
+        //     bottom: '2',
+        //     left: '50%'
+        // } as Partial<BoxProps>,
+        // 'center-right': {
+        //     bottom: '50%',
+        //     right: '2'
+        // } as Partial<BoxProps>,
+        // 'center-left': {
+        //     bottom: '50%',
+        //     left: '2'
+        // } as Partial<BoxProps>,
+    }
+
+    const contentPositionProps = {
+        'bottom-left': {
+            flexDir: 'column',
+            align: 'flex-start',
+            justify: 'flex-end'
+        } as Partial<FlexProps>,
+        'bottom-right': {
+            flexDir: 'column',
+            align: 'flex-end',
+            justify: 'flex-end'
+        } as Partial<FlexProps>,
+        'top-right': {
+            flexDir: 'column-reverse',
+            align: 'flex-end',
+            justify: 'flex-start'
+        } as Partial<FlexProps>,
+        'top-left': {
+            flexDir: 'column-reverse',
+            align: 'flex-start',
+            justify: 'flex-start'
+        } as Partial<FlexProps>
+    }
+
+    const borderRadius = {
+        'bottom-left':  '0.75rem 0.75rem 0.75rem 0',
+        'bottom-right':  '0.75rem 0.75rem 0 0.75rem',
+        'top-right': '0.75rem 0 0.75rem 0.75rem',
+        'top-left': '0 0.75rem 0.75rem 0.75rem'
+    }
+
+
 
     if (status === 'authorized') {
 
@@ -93,7 +160,10 @@ export function PluginProvider({
             <PluginContext.Provider value={{
                 url: url.current as string,
                 bot: bot.current as IBot,
-                requester: null
+                requester: null,
+                containerPositionProps: containerPositionProps[position] ?? containerPositionProps['bottom-right'],
+                contentPositionProps: contentPositionProps[position] ?? contentPositionProps['bottom-right'],
+                borderRadius: borderRadius[position] ?? borderRadius['bottom-right']
             }}
             >
                 {children}
@@ -106,7 +176,11 @@ export function PluginProvider({
 
         return (
             <ThemeProvider>
-                <Plugin.Container>
+                <Plugin.Container
+                    props={{
+                        ...(containerPositionProps[position] ?? containerPositionProps['bottom-right'])
+                    }}
+                >
                     <SkeletonCircle w='3rem' h='3rem' boxShadow='lg' />
                 </Plugin.Container>
             </ThemeProvider>
@@ -116,9 +190,12 @@ export function PluginProvider({
     if (status === 'error' && displayError) {
         return (
             <Error
-
+                dataSet={dataSet}
                 error={error.current}
                 onReload={() => authorize(token)}
+                props={{
+                    ...(containerPositionProps[position] ?? containerPositionProps['bottom-right'])
+                }}
             />
         );
     }

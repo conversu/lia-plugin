@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { IBot } from "../../@types/bot";
 import { useTheme } from "../../theme/theme.hook";
+import { usePlugin } from "../../services/plugin/hook";
 
 
 interface Props {
@@ -15,6 +16,7 @@ export function Lia({
     src
 }: Props) {
 
+  const { borderRadius } = usePlugin();
     const { isDarkTheme } = useTheme();
 
     const params = {
@@ -61,7 +63,7 @@ export function Lia({
             height='100%'
             style={{
                 border: 'none',
-                borderRadius: '.75rem .75rem 0rem .75rem'
+                borderRadius: borderRadius as string
             }}
         />
     )
