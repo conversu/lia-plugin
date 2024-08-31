@@ -5,7 +5,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build:app": "rm -rf ./build && react-scripts build",
-    "build:bundle": "webpack --mode production",
+    "stage:bundle": "webpack --env stage output=dist-stage filename=conversu-stage.js --progress --colors",
+    "prod:bundle": "webpack --env production output=dist filename=conversu.js --process --colors",
     "build": "yarn run build:app && yarn run build:bundle",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

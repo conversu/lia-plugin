@@ -1,7 +1,7 @@
 import { ThemeProvider } from './theme/theme.provider';
 import { Plugin } from './components/plugin';
-import { usePlugin } from '@services/plugin/hook';
-import { Lia } from '@components/Lia';
+import { usePlugin } from './services/plugin/hook';
+import { Lia } from './components/Lia';
 
 
 interface Props {

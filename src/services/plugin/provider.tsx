@@ -5,10 +5,8 @@ import axios, { AxiosError } from "axios";
 import { BiError } from "react-icons/bi";
 import { PluginContext } from "./context";
 
-import { Plugin } from "@components/plugin";
-
-import { ThemeProvider } from "@theme/theme.provider";
-
+import { Plugin } from "../../components/plugin";
+import { ThemeProvider } from "../../theme/theme.provider";
 import { IBot } from "../../@types/bot";
 
 
