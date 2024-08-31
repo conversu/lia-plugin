@@ -51,14 +51,20 @@ export function PluginProvider({
                     setStatus('authorized');
                 })
                 .catch((err: AxiosError) => {
-                    let message = 'Falha ao autorizar plugin'
+
+                    console.log(err)
+                    let message = 'Falha ao autorizar plugin.';
+
+                    if (err.code === 'ERR_NETWORK') {
+                        message = 'Serviço de autorização indisponível ou dispositivo sem conectividade com a internet, por favor, confira sua conexão. Se o problema persistir, contate um administrador.';
+                    }
 
                     switch (err.response?.status) {
                         case 500:
-                            message = 'Falha ao autorizar plugin, por favor, contate um administrador';
+                            message = 'Falha ao autorizar plugin, por favor, contate um administrador.';
                             break;
                         case 404:
-                            message = 'Falha ao autorizar plugin, por favor, contate um administrador';
+                            message = 'Falha ao autorizar plugin, por favor, contate um administrador.';
                             break;
                         case 403:
                             message = 'Plugin não autorizado.'
@@ -111,6 +117,7 @@ export function PluginProvider({
     if (status === 'error' && displayError) {
         return (
             <Error
+                
                 error={error.current}
                 onReload={() => authorize(token)}
             />
