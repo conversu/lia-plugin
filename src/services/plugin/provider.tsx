@@ -1,38 +1,47 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react"
-import { Center, Icon, SkeletonCircle } from "@chakra-ui/react";
+import { SkeletonCircle } from "@chakra-ui/react";
 import axios, { AxiosError } from "axios";
 
-import { BiError } from "react-icons/bi";
 import { PluginContext } from "./context";
 
 import { Plugin } from "../../components/plugin";
 import { ThemeProvider } from "../../theme/theme.provider";
 import { IBot } from "../../@types/bot";
+import { Error } from "../../components/Error";
 
 
 interface Props {
     token?: string
-    children: ReactNode
+    children: ReactNode;
+    displayError?: boolean;
+    dataSet: unknown;
 }
 
 
-export function PluginProvider({ token, children }: Props) {
+export function PluginProvider({
+    token,
+    children,
+    displayError = false,
+    dataSet
+}: Props) {
 
     const bot = useRef<IBot | null>(null);
     const url = useRef<string | null>(null);
+    const error = useRef<string | null>(null);
 
     const [status, setStatus] = useState<'loading' | 'error' | 'authorized'>('loading');
 
 
     const authorize = useCallback(async (token?: string | null) => {
-
+        setStatus('loading');
         if (token) {
-
             await axios.post(`${process.env.API_ENDPOINT}/plugin/authorize`, {
-                token
+                token,
+                parameters: dataSet
             }, {
                 headers: {
-                    origin: window.location.href,
+                    'x-origin': window.location.href,
                     requester: process.env.API_KEY
                 }
             })
@@ -59,6 +68,7 @@ export function PluginProvider({ token, children }: Props) {
                     }
 
                     console.error(`[CONVERSU] ${message}`)
+                    error.current = message;
                     setStatus('error');
                 })
         } else {
@@ -92,20 +102,20 @@ export function PluginProvider({ token, children }: Props) {
         return (
             <ThemeProvider>
                 <Plugin.Container>
-                    <SkeletonCircle w='3rem' h='3rem' />
+                    <SkeletonCircle w='3rem' h='3rem' boxShadow='lg' />
                 </Plugin.Container>
             </ThemeProvider>
         )
     }
 
+    if (status === 'error' && displayError) {
+        return (
+            <Error
+                error={error.current}
+                onReload={() => authorize(token)}
+            />
+        );
+    }
 
-    return (
-        <ThemeProvider>
-            <Plugin.Container>
-                <Center w='3rem' h='3rem' bg='red.500' color='white'>
-                    <Icon as={BiError} fontSize='1.5rem' />
-                </Center>
-            </Plugin.Container>
-        </ThemeProvider>
-    );
+    return (<></>)
 }

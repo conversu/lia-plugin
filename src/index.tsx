@@ -12,9 +12,11 @@ root.render(
         {div && (
             <PluginProvider
                 token={div.dataset.token}
+                displayError={div.dataset.showOnError?.toLowerCase() === "true"}
+                dataSet={div.dataset}
             >
                 <App
-                    allowDarkTheme={div.dataset['allow-dark-theme']?.toLowerCase() === "true"}
+                    allowDarkTheme={div.dataset.allowDarkTheme?.toLowerCase() === "true"}
                     height={div.dataset['max-height']}
                     width={div.dataset['max-width']}
                 />

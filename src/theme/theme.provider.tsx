@@ -1,12 +1,13 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
 import {
     themeLight, inputGlobalProps, scrollbarStyle
 } from "./theme.global";
+import { IChatLayoutProps } from "../@types/bot";
+import { ThemeContext } from "./theme.context";
+import { defaultLayout } from "../@cte/layout";
 
-import { Chat } from "@conversu/chat";
-import { IChatLayoutProps } from "@conversu/chat/dist/@types/layout";
 
 
 interface ThemeProviderProps {
@@ -24,11 +25,13 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
 
     const [isDarkTheme, setIsDarkTheme] = useState(false);
+    const theme = useRef<'dark' | 'light'>('light');
 
     const themeProps = isDarkTheme ? themeLight : themeLight;
 
 
     useEffect(() => {
+
         localStorage.setItem('chakra-ui-color-mode', isDarkTheme ? 'dark' : 'light');
     }, [isDarkTheme]);
 
@@ -44,7 +47,7 @@ export function ThemeProvider({
         }
     }, [allowDarkTheme]);
 
-    const theme = extendTheme({
+    const chakraTheme = extendTheme({
         initialColorMode: isDarkTheme ? 'dark' : 'light',
         useSystemColorMode: false,
         ...themeProps
@@ -61,16 +64,19 @@ export function ThemeProvider({
 
 
     return (
-        <ChakraProvider theme={theme as Record<string, unknown>} resetCSS>
-            <Chat.Theme.Provider
-                inputProps={inputGlobalProps}
-                scrollbarStyle={scrollbarStyle}
-                isDarkTheme={isDarkTheme}
-                layout={layout}
-                toggleTheme={toggleTheme}
-            >
+        <ChakraProvider theme={chakraTheme as Record<string, unknown>} resetCSS>
+            <ThemeContext.Provider value={{
+                bg: 'transparent',
+                color: 'white',
+                inputProps: { ...inputGlobalProps.base, ...inputGlobalProps[theme.current] },
+                isDarkTheme,
+                scrollbarStyle: { ...scrollbarStyle.base, ...scrollbarStyle[theme.current] },
+                theme: chakraTheme,
+                toggleTheme,
+                layout: layout ?? defaultLayout
+            }}>
                 {children}
-            </Chat.Theme.Provider>
+            </ThemeContext.Provider>
         </ChakraProvider>
     );
 }

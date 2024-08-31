@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { IBot } from "../../@types/bot";
-import { Chat } from "@conversu/chat";
+import { useTheme } from "../../theme/theme.hook";
 
 
 interface Props {
@@ -15,7 +15,7 @@ export function Lia({
     src
 }: Props) {
 
-    const { isDarkTheme } = Chat.Theme.use();
+    const { isDarkTheme } = useTheme();
 
     const params = {
         'type': 'plugin',

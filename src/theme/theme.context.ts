@@ -1,5 +1,6 @@
 import { InputProps } from "@chakra-ui/react";
 import { createContext } from "react";
+import { IChatLayoutProps } from "../@types/bot";
 
 type ThemeContextData = {
     theme: unknown;
@@ -8,12 +9,6 @@ type ThemeContextData = {
     isDarkTheme: boolean;
     toggleTheme: () => void;
     inputProps: InputProps;
-    sidebarStyle: {
-        colorScheme: string;
-        bg: string;
-        color: string;
-        hoverColor: string;
-    }
     scrollbarStyle: {
         borderRadius: string;
         short: {
@@ -28,7 +23,8 @@ type ThemeContextData = {
             thumbHover: string;
             width: string;
         }
-    }
+    },
+    layout: IChatLayoutProps;
 }
 
 export const ThemeContext = createContext({} as ThemeContextData);

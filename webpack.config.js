@@ -4,13 +4,11 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = (env) => {
 
-    console.log(env)
-
     return {
         entry: './src/index.tsx',
         output: {
-            path: path.join(__dirname, env.production ? `dist` : `dist-${env.env}`),
-            filename:  env.production ? `conversu.js` : `conversu-${env.env}.js`,
+            path: path.join(__dirname, 'dist'),
+            filename:  env.production ? `conversu.js` : `conversu.${env.env}.js`,
             assetModuleFilename: "[name].[ext]"
         },
         devtool: 'inline-source-map',

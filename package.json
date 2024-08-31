@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build:app": "rm -rf ./build && react-scripts build",
-    "bundle:dev": "webpack --env development env=development --mode development --progress",
+    "bundle:dev": "rm -rf ./dist/conversu.development.js && webpack --env development env=development --mode development --progress && cp ./dist/conversu.development.js C:/projetos/conversu/applications/feat/feat-plugin/test/conversu.development.js",
     "bundle:stage": "webpack --env stage env=stage --mode production --progress",
     "bundle:prod": "webpack --env production env=production --mode production --progress",
     "test": "react-scripts test",
@@ -31,8 +31,6 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
-    "@conversu/chat": "^1.0.1",
-    "@conversu/commons": "^3.2.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@tanstack/react-query": "^4.36.1",

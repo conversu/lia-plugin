@@ -14,9 +14,9 @@ export default function PluginContainer({ children, props }: PluginContainerProp
             position='absolute'
             bottom='2'
             right='2'
-            zIndex={3000}
+            zIndex={9998}
             p='.5rem'
-            border='1px solid red'
+            // border='1px solid red'
             {...props}
         >
             {children}
