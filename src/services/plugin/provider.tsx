@@ -23,7 +23,7 @@ export function PluginProvider({
     token,
     children,
     displayError = false,
-    dataSet
+    dataSet,
 }: Props) {
 
     const bot = useRef<IBot | null>(null);
@@ -52,7 +52,6 @@ export function PluginProvider({
                 })
                 .catch((err: AxiosError) => {
 
-                    console.log(err)
                     let message = 'Falha ao autorizar plugin.';
 
                     if (err.code === 'ERR_NETWORK') {
@@ -117,7 +116,7 @@ export function PluginProvider({
     if (status === 'error' && displayError) {
         return (
             <Error
-                
+
                 error={error.current}
                 onReload={() => authorize(token)}
             />

@@ -4,9 +4,10 @@ import { usePopoverContext } from "../provider/hook";
 
 interface Props {
     children: ReactNode;
+    border?: string;
 }
 
-function Content({ children }: Props) {
+function Content({ children, border }: Props) {
 
     const { isExpanded, height } = usePopoverContext();
 
@@ -15,14 +16,16 @@ function Content({ children }: Props) {
             <SlideFade in={isExpanded} offsetY='1rem'>
                 <Flex
                     w='100%'
-                    h={`${height}px`}
+                    h={`${height - 32}px`}
                     flexDir='column'
                     align='center'
                     justify='space-between'
                     bg={useColorModeValue('gray.50', 'gray.600')}
                     borderRadius='.75rem .75rem 0rem .75rem'
                     boxShadow='lg'
-                    py='.5rem'
+                    borderColor={useColorModeValue(border ? border : 'gray.100', border ? border : 'gray.800')}
+                    borderWidth={border === 'none' ? '0px' : '1px'}
+                    borderStyle='solid'
                 >
                     {children}
                 </Flex>

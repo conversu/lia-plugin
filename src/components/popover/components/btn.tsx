@@ -1,15 +1,18 @@
 import { Icon, IconButton } from "@chakra-ui/react";
 import { FiSmile, FiX } from "react-icons/fi";
 import { usePopoverContext } from "../provider/hook";
-import { useTheme } from "../../../theme/theme.hook";
+import { conversuColors } from "../../../theme/theme.global";
 
 
+interface Props {
+    color?: string
+}
 
-
-export default function PopoverButton() {
+export default function PopoverButton({
+    color = conversuColors.orange
+}: Props) {
 
     const { isExpanded, onToggle } = usePopoverContext();
-    const { layout } = useTheme();
 
     return (
         <IconButton
@@ -20,11 +23,11 @@ export default function PopoverButton() {
             onClick={onToggle}
             color='white'
             cursor='pointer'
-            colorScheme='purple'
+            colorScheme='orange'
             boxShadow='lg'
-            bg={layout.colors.primary}
+            bg={color}
             _hover={{
-                bg: layout.colors.secondary,
+                bg: color,
                 color: 'white'
             }}
         />

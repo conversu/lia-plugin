@@ -24,9 +24,7 @@ export default function Container({
         >
             <Flex
                 h='100%'
-                w='100%'
-                minW='300px'
-                maxW={`${width}px`}
+                w={`${width}px`}
                 maxH={`${height + 32}px`}
                 flexDir='column'
                 align='flex-end'

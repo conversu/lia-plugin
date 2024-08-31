@@ -17,8 +17,10 @@ root.render(
             >
                 <App
                     allowDarkTheme={div.dataset.allowDarkTheme?.toLowerCase() === "true"}
-                    height={div.dataset['max-height']}
-                    width={div.dataset['max-width']}
+                    height={div.dataset.maxHeight}
+                    width={div.dataset.maxWidth}
+                    border={div.dataset.border}
+                    color={div.dataset.color}
                 />
             </PluginProvider>
         )}

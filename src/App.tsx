@@ -8,12 +8,16 @@ interface Props {
   allowDarkTheme?: boolean;
   height?: string;
   width?: string;
+  color?: string;
+  border?: string;
 }
 
 function App({
   height = '700',
   width = '450',
-  allowDarkTheme = false
+  allowDarkTheme = false,
+  color,
+  border
 }: Props) {
 
   const { bot, url } = usePlugin();
@@ -28,14 +32,18 @@ function App({
           height={Number(height)}
           width={Number(width)}
         >
-          <Plugin.Popover.Content>
+          <Plugin.Popover.Content
+            border={border}
+          >
             <Lia
               allowDarkTheme={allowDarkTheme}
               bot={bot}
               src={url}
             />
           </Plugin.Popover.Content>
-          <Plugin.Popover.Button />
+          <Plugin.Popover.Button
+            color={color}
+          />
         </Plugin.Popover.Container>
       </Plugin.Container>
     </ThemeProvider>
