@@ -15,6 +15,8 @@ root.render(
             >
                 <App
                     allowDarkTheme={div.dataset['allow-dark-theme']?.toLowerCase() === "true"}
+                    height={div.dataset['max-height']}
+                    width={div.dataset['max-width']}
                 />
             </PluginProvider>
         )}

@@ -1,5 +1,6 @@
 const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = (env) => {
 
@@ -8,8 +9,8 @@ module.exports = (env) => {
     return {
         entry: './src/index.tsx',
         output: {
-            path: path.join(__dirname, env.output),
-            filename: env.filename,
+            path: path.join(__dirname, env.production ? `dist` : `dist-${env.env}`),
+            filename:  env.production ? `conversu.js` : `conversu-${env.env}.js`,
             assetModuleFilename: "[name].[ext]"
         },
         devtool: 'inline-source-map',
@@ -53,8 +54,10 @@ module.exports = (env) => {
             minimize: true,
             minimizer: [new TerserPlugin()]
         },
-        'process.env': {
-            
-        }
+        plugins: [
+            new Dotenv({
+                path: `./.env.${env.env}`
+            })
+        ]
     }
 }

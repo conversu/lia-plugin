@@ -28,8 +28,13 @@ export function PluginProvider({ token, children }: Props) {
 
         if (token) {
 
-            await axios.post('https://lia-plugin.heroku.com/authorize', {
+            await axios.post(`${process.env.API_ENDPOINT}/plugin/authorize`, {
                 token
+            }, {
+                headers: {
+                    origin: window.location.href,
+                    requester: process.env.API_KEY
+                }
             })
                 .then(response => {
                     bot.current = response.data.bot;

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { IBot } from "../../@types/bot";
 import { Chat } from "@conversu/chat";
 
@@ -22,6 +23,34 @@ export function Lia({
         'allow-toggle': allowDarkTheme,
         'origin': btoa(window.location.origin)
     };
+
+
+    useEffect(() => {
+        const handleMessage = (event: any) => {
+          // Validate the origin of the message
+          console.debug('-----------------')
+          console.debug(event)
+          if (event.origin !== src) {
+            return; // Ignore the message if it's from an untrusted domain
+          }
+    
+          // Access the data sent from the iframe
+          const receivedData = event.data;
+          console.debug("Message received from iframe:", receivedData);
+    
+          // Perform actions based on the received message
+          // e.g., updating state, triggering side effects, etc.
+        };
+    
+        // Add the event listener
+        window.addEventListener("message", handleMessage);
+    
+        // Clean up the event listener on component unmount
+        return () => {
+          window.removeEventListener("message", handleMessage);
+        };
+      }, [src]);
+
 
     return (
         <iframe
