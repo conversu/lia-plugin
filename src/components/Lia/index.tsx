@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { IBot } from "../../@types/bot";
 import { useTheme } from "../../theme/theme.hook";
 import { usePlugin } from "../../services/plugin/hook";
@@ -27,31 +26,31 @@ export function Lia({
     };
 
 
-    useEffect(() => {
-        const handleMessage = (event: any) => {
-          // Validate the origin of the message
-          console.debug('-----------------')
-          console.debug(event)
-          if (event.origin !== src) {
-            return; // Ignore the message if it's from an untrusted domain
-          }
+    // useEffect(() => {
+    //     const handleMessage = (event: any) => {
+    //       // Validate the origin of the message
+    //       console.debug('-----------------')
+    //       console.debug(event)
+    //       if (event.origin !== src) {
+    //         return; // Ignore the message if it's from an untrusted domain
+    //       }
     
-          // Access the data sent from the iframe
-          const receivedData = event.data;
-          console.debug("Message received from iframe:", receivedData);
+    //       // Access the data sent from the iframe
+    //       const receivedData = event.data;
+    //       console.debug("Message received from iframe:", receivedData);
     
-          // Perform actions based on the received message
-          // e.g., updating state, triggering side effects, etc.
-        };
+    //       // Perform actions based on the received message
+    //       // e.g., updating state, triggering side effects, etc.
+    //     };
     
-        // Add the event listener
-        window.addEventListener("message", handleMessage);
+    //     // Add the event listener
+    //     window.addEventListener("message", handleMessage);
     
-        // Clean up the event listener on component unmount
-        return () => {
-          window.removeEventListener("message", handleMessage);
-        };
-      }, [src]);
+    //     // Clean up the event listener on component unmount
+    //     return () => {
+    //       window.removeEventListener("message", handleMessage);
+    //     };
+    //   }, [src]);
 
 
     return (
