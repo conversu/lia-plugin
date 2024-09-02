@@ -1,6 +1,6 @@
 import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import { usePopoverContext } from "../provider/hook";
+import { usePlugin } from "../../../services/plugin/hook";
 
 interface Props {
     children: ReactNode;
@@ -8,7 +8,7 @@ interface Props {
 
 export default function PopoverBody({ children }: Props) {
 
-    const { height } = usePopoverContext();
+    const { height } = usePlugin();
 
     const headerSize = document.getElementById('popover-header')?.clientHeight ?? 0;
     const footerSize = document.getElementById('popover-footer')?.clientHeight ?? 0;

@@ -4,25 +4,25 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import {
     themeLight, inputGlobalProps, scrollbarStyle
 } from "./theme.global";
-import { IChatLayoutProps } from "../@types/bot";
 import { ThemeContext } from "./theme.context";
 import { defaultLayout } from "../@cte/layout";
+import { usePlugin } from "../services/plugin/hook";
 
 
 
 interface ThemeProviderProps {
     children: ReactNode;
     allowDarkTheme?: boolean;
-    layout?: IChatLayoutProps;
 }
 
 
 
 export function ThemeProvider({
     children,
-    allowDarkTheme = false,
-    layout
+    allowDarkTheme = false
 }: ThemeProviderProps) {
+
+    const { bot } = usePlugin();
 
     const [isDarkTheme, setIsDarkTheme] = useState(false);
     const theme = useRef<'dark' | 'light'>('light');
@@ -73,7 +73,7 @@ export function ThemeProvider({
                 scrollbarStyle: { ...scrollbarStyle.base, ...scrollbarStyle[theme.current] },
                 theme: chakraTheme,
                 toggleTheme,
-                layout: layout ?? defaultLayout
+                layout: bot?.layout ?? defaultLayout
             }}>
                 {children}
             </ThemeContext.Provider>

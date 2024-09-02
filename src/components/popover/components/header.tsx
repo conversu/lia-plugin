@@ -1,6 +1,4 @@
-import { Center, Flex, Grid, Icon, IconButton, Text } from "@chakra-ui/react";
-import { FiX } from "react-icons/fi";
-import { usePopoverContext } from "../provider/hook";
+import { Center, Flex, Grid, Text } from "@chakra-ui/react";
 
 
 interface Props {
@@ -8,8 +6,6 @@ interface Props {
     subtitle?: string;
 }
 export default function PopoverHeader({ title, subtitle }: Props) {
-
-    // const { onToggle } = usePopoverContext();
 
     return (
         <Center w='100%' px='.5rem' id='popover-header'>

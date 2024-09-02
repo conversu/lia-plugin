@@ -20,7 +20,6 @@ export default function PluginContainer({
         <Box
             position='fixed'
             zIndex={9998}
-            p='.5rem'
             {...containerPositionProps}
             {...props}
         >

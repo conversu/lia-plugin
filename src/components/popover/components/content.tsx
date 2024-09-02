@@ -1,6 +1,5 @@
-import { Box, Flex, SlideFade, useColorModeValue } from "@chakra-ui/react";
+import { Box, Center, Flex, SlideFade, useColorModeValue } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import { usePopoverContext } from "../provider/hook";
 import { usePlugin } from "../../../services/plugin/hook";
 
 interface Props {
@@ -10,27 +9,28 @@ interface Props {
 
 function Content({ children, border }: Props) {
 
-    const { isExpanded, height } = usePopoverContext();
-    const { borderRadius } = usePlugin();
+    const { borderRadius, isShortVersion, isExpanded, height, width, buttonSize } = usePlugin();
 
     return (
         <Box w='100%' h='100%'>
             <SlideFade in={isExpanded} offsetY='1rem'>
-                <Flex
-                    w='100%'
-                    h={`${height - 32}px`}
-                    flexDir='column'
-                    align='center'
-                    justify='space-between'
-                    bg={useColorModeValue('gray.50', 'gray.600')}
-                    borderRadius={borderRadius}
-                    boxShadow='lg'
-                    borderColor={useColorModeValue(border ? border : 'gray.100', border ? border : 'gray.800')}
-                    borderWidth={border === 'none' ? '0px' : '1px'}
-                    borderStyle='solid'
-                >
-                    {children}
-                </Flex>
+                <Center w='100%' h='100%'>
+                    <Flex
+                        w={isShortVersion ? `${width - 16}px` : '100%'}
+                        h={`${height - buttonSize}px`}
+                        flexDir='column'
+                        align='center'
+                        justify='space-between'
+                        bg={useColorModeValue('gray.50', 'gray.600')}
+                        borderRadius={borderRadius}
+                        boxShadow='lg'
+                        borderColor={useColorModeValue(border ? border : 'gray.100', border ? border : 'gray.800')}
+                        borderWidth={border === 'none' ? '0px' : '1px'}
+                        borderStyle='solid'
+                    >
+                        {children}
+                    </Flex>
+                </Center>
             </SlideFade>
         </Box>
     );
@@ -39,7 +39,7 @@ function Content({ children, border }: Props) {
 
 export default function PopoverContent(props: Props) {
 
-    const { isExpanded } = usePopoverContext();
+    const { isExpanded } = usePlugin();
 
     if (isExpanded) {
 

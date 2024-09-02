@@ -6,7 +6,6 @@ import axios, { AxiosError } from "axios";
 import { PluginContext } from "./context";
 
 import { Plugin } from "../../components/plugin";
-import { ThemeProvider } from "../../theme/theme.provider";
 import { IBot } from "../../@types/bot";
 import { Error } from "../../components/Error";
 import { PluginPosition } from "../../@types/plugin";
@@ -18,6 +17,9 @@ interface Props {
     displayError?: boolean;
     dataSet: any;
     position?: PluginPosition;
+    buttonSize?: number;
+    height?: string;
+    width?: string;
 }
 
 
@@ -26,13 +28,17 @@ export function PluginProvider({
     children,
     displayError = false,
     dataSet,
-    position = 'bottom-right'
+    position = 'bottom-right',
+    buttonSize = 64,
+    height,
+    width
 }: Props) {
 
     const bot = useRef<IBot | null>(null);
     const url = useRef<string | null>(null);
     const error = useRef<string | null>(null);
 
+    const [isExpanded, setIsExpanded] = useState(false);
     const [status, setStatus] = useState<'loading' | 'error' | 'authorized'>('loading');
 
 
@@ -90,23 +96,28 @@ export function PluginProvider({
         authorize(token);
     }, [authorize, token]);
 
+    const isShortVersion = window.innerWidth <= 400;
+
+    const yAxisPosition = isShortVersion ?  '1' : '4';
+    const xAxisPosition = isShortVersion ? isExpanded ? '0' : '1' : '4';
+
 
     const containerPositionProps = {
         'bottom-left': {
-            bottom: '2',
-            left: '2'
+            bottom: yAxisPosition,
+            left: xAxisPosition
         } as Partial<BoxProps>,
         'bottom-right': {
-            bottom: '2',
-            right: '2'
+            bottom: yAxisPosition,
+            right: xAxisPosition
         } as Partial<BoxProps>,
         'top-right': {
-            top: '2',
-            right: '2'
+            top: yAxisPosition,
+            right: xAxisPosition
         } as Partial<BoxProps>,
         'top-left': {
-            top: '2',
-            left: '2',
+            top: yAxisPosition,
+            left: xAxisPosition,
         } as Partial<BoxProps>,
         // 'bottom': {
         //     bottom: '2',
@@ -125,34 +136,32 @@ export function PluginProvider({
     const contentPositionProps = {
         'bottom-left': {
             flexDir: 'column',
-            align: 'flex-start',
+            align: isShortVersion && isExpanded ? 'center' : 'flex-start',
             justify: 'flex-end'
         } as Partial<FlexProps>,
         'bottom-right': {
             flexDir: 'column',
-            align: 'flex-end',
+            align: isShortVersion && isExpanded ? 'center' : 'flex-end',
             justify: 'flex-end'
         } as Partial<FlexProps>,
         'top-right': {
             flexDir: 'column-reverse',
-            align: 'flex-end',
+            align: isShortVersion && isExpanded ? 'center' : 'flex-end',
             justify: 'flex-start'
         } as Partial<FlexProps>,
         'top-left': {
             flexDir: 'column-reverse',
-            align: 'flex-start',
+            align: isShortVersion && isExpanded ? 'center' : 'flex-start',
             justify: 'flex-start'
         } as Partial<FlexProps>
     }
 
     const borderRadius = {
-        'bottom-left':  '0.75rem 0.75rem 0.75rem 0',
-        'bottom-right':  '0.75rem 0.75rem 0 0.75rem',
+        'bottom-left': '0.75rem 0.75rem 0.75rem 0',
+        'bottom-right': '0.75rem 0.75rem 0 0.75rem',
         'top-right': '0.75rem 0 0.75rem 0.75rem',
         'top-left': '0 0.75rem 0.75rem 0.75rem'
     }
-
-
 
     if (status === 'authorized') {
 
@@ -163,7 +172,15 @@ export function PluginProvider({
                 requester: null,
                 containerPositionProps: containerPositionProps[position] ?? containerPositionProps['bottom-right'],
                 contentPositionProps: contentPositionProps[position] ?? contentPositionProps['bottom-right'],
-                borderRadius: borderRadius[position] ?? borderRadius['bottom-right']
+                borderRadius: isShortVersion ? '0.75rem' : (borderRadius[position] ?? borderRadius['bottom-right']),
+                buttonSize,
+                isShortVersion,
+                isExpanded,
+                onClose: () => setIsExpanded(false),
+                onOpen: () => setIsExpanded(true),
+                onToggle: () => setIsExpanded(!isExpanded),
+                height: height ? Number(height) : isShortVersion ? window.innerHeight - buttonSize : 700,
+                width: isExpanded ? width ? Number(width) : isShortVersion ? window.innerWidth : 450 : buttonSize
             }}
             >
                 {children}
@@ -175,15 +192,13 @@ export function PluginProvider({
     if (status === 'loading') {
 
         return (
-            <ThemeProvider>
-                <Plugin.Container
-                    props={{
-                        ...(containerPositionProps[position] ?? containerPositionProps['bottom-right'])
-                    }}
-                >
-                    <SkeletonCircle w='3rem' h='3rem' boxShadow='lg' />
-                </Plugin.Container>
-            </ThemeProvider>
+            <Plugin.Container
+                props={{
+                    ...(containerPositionProps[position] ?? containerPositionProps['bottom-right'])
+                }}
+            >
+                <SkeletonCircle w='3rem' h='3rem' boxShadow='lg' />
+            </Plugin.Container>
         )
     }
 
@@ -193,6 +208,7 @@ export function PluginProvider({
                 dataSet={dataSet}
                 error={error.current}
                 onReload={() => authorize(token)}
+                buttonSize={buttonSize}
                 props={{
                     ...(containerPositionProps[position] ?? containerPositionProps['bottom-right'])
                 }}

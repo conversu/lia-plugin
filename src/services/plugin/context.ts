@@ -10,6 +10,14 @@ export interface IPluginContext {
     contentPositionProps: Partial<FlexProps>;
     containerPositionProps: Partial<BoxProps>;
     borderRadius: FlexProps['borderRadius'];
+    buttonSize: number;
+    isShortVersion: boolean;
+    isExpanded: boolean;
+    onToggle: () => void;
+    onClose: () => void;
+    onOpen: () => void;
+    height: number;
+    width: number;
 }
 
 

@@ -1,7 +1,7 @@
 {
-  "name": "lia-plugin",
-  "version": "1.0.0",
-  "private": true,
+  "name": "@conversu/plugin",
+  "version": "2.0.0",
+  "private": false,
   "scripts": {
     "start": "react-scripts start",
     "build:app": "rm -rf ./build && react-scripts build",
@@ -62,5 +62,13 @@
     "ts-loader": "^9.5.1",
     "typescript": "^5.5.4",
     "webpack-cli": "^5.1.4"
-  }
+  },
+  "description": "Conversu plugin",
+  "main": "dist/conversu.js",
+  "author": "Pablo Woinarovicz Ramos",
+  "files": [
+    "dist/conversu.js",
+    "dist/conversu.stage.js",
+    "README.md"
+  ]
 }
