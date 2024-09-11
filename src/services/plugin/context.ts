@@ -16,6 +16,8 @@ export interface IPluginContext {
     onToggle: () => void;
     onClose: () => void;
     onOpen: () => void;
+    showTooltip: boolean;
+    onTooltipClose: () => void;
     height: number;
     width: number;
 }

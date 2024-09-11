@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react"
-import { BoxProps, FlexProps, SkeletonCircle } from "@chakra-ui/react";
+import { BoxProps, FlexProps, SkeletonCircle, useDisclosure } from "@chakra-ui/react";
 import axios, { AxiosError } from "axios";
 
 import { PluginContext } from "./context";
@@ -41,6 +41,8 @@ export function PluginProvider({
     const [isExpanded, setIsExpanded] = useState(false);
     const [status, setStatus] = useState<'loading' | 'error' | 'authorized'>('loading');
 
+    const {isOpen: isTooltipOpen, onClose: onTooltipClose, onOpen: onTooltipOpen} = useDisclosure();
+
 
     const authorize = useCallback(async (token?: string | null) => {
         setStatus('loading');
@@ -55,7 +57,17 @@ export function PluginProvider({
                 }
             })
                 .then(response => {
-                    bot.current = response.data.bot;
+                    bot.current = {
+                        alias:  response.data.bot.alias,
+                        uuid:  response.data.bot.uuid,
+                        tooltip:  response.data.bot.tooltip,
+                        layout: {
+                            agent: JSON.parse(response.data.bot.layout.agent),
+                            user: JSON.parse(response.data.bot.layout.user),
+                            bot: JSON.parse(response.data.bot.layout.bot),
+                            colors: JSON.parse(response.data.bot.layout.colors)
+                        }
+                    };
                     url.current = response.data.liaEndpoint;
                     setStatus('authorized');
                 })
@@ -94,11 +106,12 @@ export function PluginProvider({
 
     useEffect(() => {
         authorize(token);
+        onTooltipOpen();
     }, [authorize, token]);
 
     const isShortVersion = window.innerWidth <= 400;
 
-    const yAxisPosition = isShortVersion ?  '1' : '4';
+    const yAxisPosition = isShortVersion ? '1' : '4';
     const xAxisPosition = isShortVersion ? isExpanded ? '0' : '1' : '4';
 
 
@@ -163,6 +176,41 @@ export function PluginProvider({
         'top-left': '0 0.75rem 0.75rem 0.75rem'
     }
 
+    function getWidth() {
+        if (!isExpanded && !bot?.current?.tooltip) {
+            return buttonSize;
+        }
+
+        let width = 450
+        if (width) {
+            width= Number(width)
+        }
+
+        if (isShortVersion) {
+
+            width = window.innerWidth
+        }
+        
+        if(!!bot?.current?.tooltip && isTooltipOpen && !isExpanded){
+
+            return width * 0.75
+        }
+
+        return width
+    }
+
+    function getHeight() {
+        if (height) {
+            return Number(height)
+        }
+
+        if (isShortVersion) {
+            return window.innerHeight - buttonSize
+        }
+
+        return 700
+    }
+
     if (status === 'authorized') {
 
         return (
@@ -175,12 +223,14 @@ export function PluginProvider({
                 borderRadius: isShortVersion ? '0.75rem' : (borderRadius[position] ?? borderRadius['bottom-right']),
                 buttonSize,
                 isShortVersion,
+                showTooltip: !!bot?.current?.tooltip && isTooltipOpen && !isExpanded,
                 isExpanded,
                 onClose: () => setIsExpanded(false),
                 onOpen: () => setIsExpanded(true),
                 onToggle: () => setIsExpanded(!isExpanded),
-                height: height ? Number(height) : isShortVersion ? window.innerHeight - buttonSize : 700,
-                width: isExpanded ? width ? Number(width) : isShortVersion ? window.innerWidth : 450 : buttonSize
+                onTooltipClose,
+                height: getHeight(),
+                width: getWidth()
             }}
             >
                 {children}

@@ -8,12 +8,14 @@ interface Props {
   color?: string;
   border?: string;
   zIndex?: number;
+  tooltipColor?: string;
 }
 
 function App({
   allowDarkTheme = false,
   color,
   border,
+  tooltipColor,
   zIndex = 9998
 }: Props) {
 
@@ -40,6 +42,7 @@ function App({
         <Plugin.Popover.Button
           color={color}
           size={buttonSize}
+          tooltip={tooltipColor}
         />
       </Plugin.Popover.Container>
     </Plugin.Container>

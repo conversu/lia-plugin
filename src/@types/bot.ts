@@ -2,6 +2,7 @@ export interface IBot {
     uuid: string;
     alias: string;
     layout: IChatLayoutProps;
+    tooltip?: string;
 }
 
 

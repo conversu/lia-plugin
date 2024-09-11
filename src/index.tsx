@@ -28,6 +28,7 @@ root.render(
                         border={div.dataset.border}
                         color={div.dataset.color}
                         zIndex={div.dataset.zIndex ? Number(div.dataset.zIndex) : 9998}
+                        tooltipColor={div.dataset.tooltipColor}
                     />
                 </ThemeProvider>
             </PluginProvider>
