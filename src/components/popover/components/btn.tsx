@@ -34,8 +34,6 @@ export default function PopoverButton({
 
     const buttonSize = size * (isExpanded ? 0.6 : 1) * (isShortVersion ? 0.8 : 1)
 
-    console.log(bot)
-
     return (
         <Flex flexDir='column' gap='1rem' {...contentPositionProps}>
             {allowTooltip && showTooltip && (
@@ -49,16 +47,16 @@ export default function PopoverButton({
                     borderRadius={borderRadius}
                     boxShadow='lg'
                     bg={!tooltip ? bot.layout.bot.bg : tooltip}
-                    color={!tooltip  ? 'gray.800' : bot.layout.bot.color}
+                    color={!tooltip ? bot.layout.bot.color : 'gray.800'}
                     gap='.5rem'
                     mr={`${Math.floor(buttonSize / 2)}px`}
                 >
                     <Text as='span' w='100%' textAlign='left'>
-                        {bot?.tooltip?.split('\n').map(i => <React.Fragment key={generateKey()}>{i}<br/></React.Fragment>)}
+                        {bot?.tooltip?.split('\n').map(i => <React.Fragment key={generateKey()}>{i}<br /></React.Fragment>)}
                     </Text>
                     <Flex w='1.5rem' h='100%' flexDir='column' justify='flex-start' align='flex-end' mt='-1rem'>
                         <IconButton
-                            icon={<Icon as={FiX}  />}
+                            icon={<Icon as={FiX} />}
                             aria-label="Fechar dica"
                             variant='ghost'
                             onClick={onTooltipClose}
