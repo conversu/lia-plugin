@@ -8,14 +8,14 @@ interface Props {
     allowDarkTheme: boolean;
     bot: IBot;
     src: string;
-    username?: string;
+    user?: string;
 }
 
 export function Lia({
     allowDarkTheme,
     bot,
     src,
-    username
+    user
 }: Props) {
 
     const { borderRadius } = usePlugin();
@@ -26,7 +26,7 @@ export function Lia({
         'theme': isDarkTheme && allowDarkTheme ? 'dark' : 'light',
         'allow-toggle': allowDarkTheme,
         'origin': btoa(window.location.origin),
-        'username': username ?? 'unknown'
+        'username': btoa(user ?? 'unknown')
     };
 
 

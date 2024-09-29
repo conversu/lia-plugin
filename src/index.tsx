@@ -29,7 +29,7 @@ root.render(
                         color={div.dataset.color}
                         zIndex={div.dataset.zIndex ? Number(div.dataset.zIndex) : 9998}
                         tooltipColor={div.dataset.tooltipColor}
-                        username={div.dataset.username ?? 'unknown'}
+                        user={div.dataset.user ?? 'unknown'}
                     />
                 </ThemeProvider>
             </PluginProvider>
