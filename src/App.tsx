@@ -9,6 +9,7 @@ interface Props {
   border?: string;
   zIndex?: number;
   tooltipColor?: string;
+  username?: string;
 }
 
 function App({
@@ -16,7 +17,8 @@ function App({
   color,
   border,
   tooltipColor,
-  zIndex = 9998
+  zIndex = 9998,
+  username
 }: Props) {
 
   const { bot, url, buttonSize } = usePlugin();
@@ -37,6 +39,7 @@ function App({
             allowDarkTheme={allowDarkTheme}
             bot={bot}
             src={url}
+            username={username}
           />
         </Plugin.Popover.Content>
         <Plugin.Popover.Button
