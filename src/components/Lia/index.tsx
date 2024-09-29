@@ -57,7 +57,7 @@ export function Lia({
     //   }, [src]);
 
     useEffect(() => {
-        const iframe = document.getElementById("your-iframe-id");
+        const iframe = document.getElementById(bot.uuid);
 
         const disableScroll = () => {
             document.body.style.overflow = "hidden";
