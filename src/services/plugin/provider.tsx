@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { BoxProps, FlexProps, SkeletonCircle, useDisclosure } from "@chakra-ui/react";
-import axios, { AxiosError } from "axios";
 
 import { PluginContext } from "./context";
 
