@@ -1,11 +1,11 @@
 {
   "name": "@conversu/plugin",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "private": false,
   "scripts": {
     "start": "react-scripts start",
     "build:app": "rm -rf ./build && react-scripts build",
-    "bundle:dev": "rm -rf ./dist/conversu.development.js && webpack --env development env=development --mode development --progress && cp ./dist/conversu.development.js C:/projetos/conversu/applications/feat/feat-plugin/test/conversu.development.js",
+    "bundle:dev": "rm -rf ./dist/conversu.development.js && webpack --env development env=development --mode development --progress && cp ./dist/conversu.development.js ./test/conversu.development.js",
     "bundle:stage": "webpack --env stage env=stage --mode production --progress",
     "bundle:prod": "webpack --env production env=production --mode production --progress",
     "test": "react-scripts test",
