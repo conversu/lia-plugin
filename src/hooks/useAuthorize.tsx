@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useRef, useState } from 'react';
 import { IBot } from '../@types/bot';
+import { format, formatISO } from 'date-fns';
 
 const parseTime = (time: string): [number, number] => {
   const [hour, minute] = time.split(':').map(Number);
@@ -10,6 +11,7 @@ const parseTime = (time: string): [number, number] => {
 };
 
 const isWithinSchedule = (start?: string | null, end?: string | null): boolean => {
+  console.debug(`[CONVERSU] start: ${start} | end: ${end}`)
   if (!start || !end) {
     return true; // No restrictions
   }
@@ -22,6 +24,10 @@ const isWithinSchedule = (start?: string | null, end?: string | null): boolean =
   const currentTime = current.getHours() * 60 + current.getMinutes();
   const startTime = startHour * 60 + startMinute;
   const endTime = endHour * 60 + endMinute;
+
+  if (endTime < startTime) {
+    return currentTime >= startTime || currentTime <= endTime;
+  }
 
   return currentTime >= startTime && currentTime <= endTime;
 };
@@ -36,7 +42,7 @@ export const useAuthorize = (params: {
   const {
     token,
     dataSet: parameters,
-    onTooltipOpen = () => {},
+    onTooltipOpen = () => { },
     defaultEndHour = null,
     defaultStartHour = null,
   } = params;
@@ -59,6 +65,9 @@ export const useAuthorize = (params: {
           headers: {
             'x-origin': window.location.href,
             requester: process.env.API_KEY,
+            'x-current-time': format(new Date(), 'HH:mm'),
+            'x-timestamp': formatISO(new Date()),
+            'x-timezone': Intl.DateTimeFormat().resolvedOptions().timeZone
           },
         }
       );
