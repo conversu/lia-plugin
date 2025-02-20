@@ -1,95 +1,102 @@
-import { IBot } from "../../@types/bot";
-import { useTheme } from "../../theme/theme.hook";
-import { usePlugin } from "../../services/plugin/hook";
-import { useEffect } from "react";
-
+import { useEffect } from 'react';
+import { IBot } from '../../@types/bot';
+import { usePlugin } from '../../services/plugin/hook';
+import { useTheme } from '../../theme/theme.hook';
+import { useSessionContext } from '../../services/session/hook';
 
 interface Props {
-    allowDarkTheme: boolean;
-    bot: IBot;
-    src: string;
-    user?: string;
+	allowDarkTheme: boolean;
+	bot: IBot;
+	src: string;
+	user?: string;
 }
 
-export function Lia({
-    allowDarkTheme,
-    bot,
-    src,
-    user
-}: Props) {
-
-    const { borderRadius } = usePlugin();
-    const { isDarkTheme } = useTheme();
-
-    const params = {
-        'type': 'plugin',
-        'theme': isDarkTheme && allowDarkTheme ? 'dark' : 'light',
-        'allow-toggle': allowDarkTheme,
-        'origin': btoa(window.location.origin),
-        'username': btoa(user ?? 'unknown')
-    };
+export function Lia({ allowDarkTheme, bot, src, user }: Props) {
 
 
-    // useEffect(() => {
-    //     const handleMessage = (event: any) => {
-    //       // Validate the origin of the message
-    //       console.debug('-----------------')
-    //       console.debug(event)
-    //       if (event.origin !== src) {
-    //         return; // Ignore the message if it's from an untrusted domain
-    //       }
+	const { borderRadius } = usePlugin();
+	const { isDarkTheme } = useTheme();
+	const { handleMessageEvents, session } = useSessionContext();
 
-    //       // Access the data sent from the iframe
-    //       const receivedData = event.data;
-    //       console.debug("Message received from iframe:", receivedData);
+	const params = {
+		type: 'plugin',
+		theme: isDarkTheme && allowDarkTheme ? 'dark' : 'light',
+		'allow-toggle': allowDarkTheme,
+		origin: btoa(window.location.origin),
+		username: btoa(user ?? 'unknown'),
+	};
 
-    //       // Perform actions based on the received message
-    //       // e.g., updating state, triggering side effects, etc.
-    //     };
+	const listener = (e: MessageEvent) => {
+		return handleMessageEvents(e, src);
+	};
 
-    //     // Add the event listener
-    //     window.addEventListener("message", handleMessage);
+	useEffect(() => {
 
-    //     // Clean up the event listener on component unmount
-    //     return () => {
-    //       window.removeEventListener("message", handleMessage);
-    //     };
-    //   }, [src]);
+		window.addEventListener('message', listener);
 
-    useEffect(() => {
-        const iframe = document.getElementById(bot.uuid);
+		return () => {
+			window.removeEventListener('message', listener);
+		};
+	}, [bot.alias, src]);
 
-        const disableScroll = () => {
-            document.body.style.overflow = "hidden";
-        };
+	useEffect(() => {
+		const iframe = document.getElementById(bot.uuid);
 
-        const enableScroll = () => {
-            document.body.style.overflow = "auto";
-        };
+		const disableScroll = (event: any) => {
+			event.preventDefault();
+			event.stopPropagation();
+		};
 
-        iframe?.addEventListener("mouseenter", disableScroll);
-        iframe?.addEventListener("mouseleave", enableScroll);
+		if (iframe) {
+			iframe.addEventListener('mouseenter', () => {
+				document.addEventListener('wheel', disableScroll, { passive: false });
+				document.addEventListener('touchmove', disableScroll, { passive: false });
+			});
 
-        // Clean up event listeners on component unmount
-        return () => {
-            iframe?.removeEventListener("mouseenter", disableScroll);
-            iframe?.removeEventListener("mouseleave", enableScroll);
-        };
-    }, [])
+			iframe.addEventListener('mouseleave', () => {
+				document.removeEventListener('wheel', disableScroll);
+				document.removeEventListener('touchmove', disableScroll);
+			});
+		}
+
+		return () => {
+			document.removeEventListener('wheel', disableScroll);
+			document.removeEventListener('touchmove', disableScroll);
+		};
+	}, [bot.uuid]);
 
 
-    return (
-        <iframe
-            src={new URL(`${src}/${bot.alias}?${Object.entries(params).map(e => e.join('=')).join('&')}`).toString()}
-            id={bot.uuid}
-            title='conversu-plugin'
-            width='100%'
-            height='100%'
-            style={{
-                border: 'none',
-                borderRadius: borderRadius as string,
-                pointerEvents: 'auto'
-            }}
-        />
-    )
+	const queryParams = `${Object.entries(params).map((e) => e.join('=')).join('&')}`
+
+	return (
+		<>{
+			session ? (
+				<iframe
+					src={new URL(`${src}/${bot.alias}/i/${session}?${queryParams}`).toString()}
+					id={bot.uuid}
+					title="conversu-plugin"
+					width="100%"
+					height="100%"
+					style={{
+						border: 'none',
+						borderRadius: borderRadius as string,
+						pointerEvents: 'auto',
+					}}
+				/>
+			) : (
+				<iframe
+					src={new URL(`${src}/${bot.alias}?${queryParams}`).toString()}
+					id={bot.uuid}
+					title="conversu-plugin"
+					width="100%"
+					height="100%"
+					style={{
+						border: 'none',
+						borderRadius: borderRadius as string,
+						pointerEvents: 'auto',
+					}}
+				/>
+			)
+		}</>
+	);
 }

@@ -5,6 +5,7 @@ import { PluginProvider } from './services/plugin/provider';
 import { PluginPosition } from './@types/plugin';
 import { ThemeProvider } from './theme/theme.provider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SessionProvider } from './services/session/provider';
 
 
 const div = document.getElementById('conversu-plugin');
@@ -37,13 +38,15 @@ root.render(
                     <ThemeProvider
                         allowDarkTheme={div.dataset.allowDarkTheme?.toLowerCase() === "true"}
                     >
-                        <App
-                            border={div.dataset.border}
-                            color={div.dataset.color}
-                            zIndex={div.dataset.zIndex ? Number(div.dataset.zIndex) : 9998}
-                            tooltipColor={div.dataset.tooltipColor}
-                            user={div.dataset.user}
-                        />
+                        <SessionProvider>
+                            <App
+                                border={div.dataset.border}
+                                color={div.dataset.color}
+                                zIndex={div.dataset.zIndex ? Number(div.dataset.zIndex) : 9998}
+                                tooltipColor={div.dataset.tooltipColor}
+                                user={div.dataset.user}
+                            />
+                        </SessionProvider>
                     </ThemeProvider>
                 </PluginProvider>
             </QueryClientProvider>

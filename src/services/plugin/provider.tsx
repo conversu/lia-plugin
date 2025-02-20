@@ -139,7 +139,7 @@ export function PluginProvider({
         }
 
         if (isShortVersion) {
-            return window.innerHeight - buttonSize
+            return window.innerHeight// - buttonSize
         }
 
         return 700

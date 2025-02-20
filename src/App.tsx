@@ -1,6 +1,7 @@
 import { Plugin } from './components/plugin';
 import { usePlugin } from './services/plugin/hook';
 import { Lia } from './components/Lia';
+import { useState } from 'react';
 
 
 interface Props {
@@ -22,6 +23,9 @@ function App({
 }: Props) {
 
   const { bot, url, buttonSize } = usePlugin();
+
+  
+
 
   return (
     <Plugin.Container
