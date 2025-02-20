@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { SessionContext } from "./context";
+import { usePlugin } from "../plugin/hook";
 
 
 interface Props {
@@ -11,6 +12,7 @@ export enum MessageEventType {
     LOGOUT = 'LOGOUT',
     OPENED = 'OPENED',
     CLOSED = 'CLOSED',
+    POPOVER_CLOSE = 'POPOVER_CLOSE'
 }
 
 
@@ -19,6 +21,8 @@ export function SessionProvider({ children }: Props) {
     const CONVERSU_SESSION = 'conversu-session';
 
     const [session, setSession] = useState<string | null>(localStorage.getItem(CONVERSU_SESSION) ?? null);
+
+    const { onClose } = usePlugin();
 
     // Ao encerrar uma sessão só remover ela do localStorage (Verificar se precisa remover do use state sessionId)
     const handleClosedSession = () => {
@@ -61,6 +65,9 @@ export function SessionProvider({ children }: Props) {
                 break;
             case MessageEventType.LOGOUT:
                 handleLogout();
+                break;
+            case MessageEventType.POPOVER_CLOSE:
+                onClose();
                 break;
             default:
                 break;

@@ -54,50 +54,54 @@ export default function PopoverButton({
                     <Text as='span' w='100%' textAlign='left'>
                         {bot?.tooltip?.split('\n').map(i => <React.Fragment key={generateKey()}>{i}<br /></React.Fragment>)}
                     </Text>
-                    <Flex w='1.5rem' h='100%' flexDir='column' justify='flex-start' align='flex-end' mt='-1rem'>
-                        <IconButton
-                            icon={<Icon as={FiX} />}
-                            aria-label="Fechar dica"
-                            variant='ghost'
-                            onClick={onTooltipClose}
-                            cursor='pointer'
-                            p={0}
-                            isRound
-                            fontSize='1rem'
-                            size='sm'
-                            color={'gray.800' ?? bot.layout.bot.color}
-                            colorScheme='whiteAlpha'
-                            bg='transparent'
-                            _hover={{
-                                border: 'none',
-                                filter: 'brightness(0.8)'
-                            }}
-                        />
-                    </Flex>
+                    {!isExpanded && (
+                        <Flex w='1.5rem' h='100%' flexDir='column' justify='flex-start' align='flex-end' mt='-1rem'>
+                            <IconButton
+                                icon={<Icon as={FiX} />}
+                                aria-label="Fechar dica"
+                                variant='ghost'
+                                onClick={onTooltipClose}
+                                cursor='pointer'
+                                p={0}
+                                isRound
+                                fontSize='1rem'
+                                size='sm'
+                                color={bot.layout.bot.color ?? 'gray.800'}
+                                colorScheme='whiteAlpha'
+                                bg='transparent'
+                                _hover={{
+                                    border: 'none',
+                                    filter: 'brightness(0.8)'
+                                }}
+                            />
+                        </Flex>
+                    )}
                 </Flex>
             )}
-            <IconButton
-                icon={
-                    <Icon
-                        as={isExpanded ? FiX : FiSmile}
-                        fontSize={`${buttonSize - 16}px`}
-                    />
-                }
-                aria-label="Abrir chat"
-                rounded='full'
-                w={`${buttonSize}px`}
-                h={`${buttonSize}px`}
-                onClick={onToggle}
-                color='white'
-                cursor='pointer'
-                colorScheme='orange'
-                bg={color}
-                _hover={{
-                    bg: color,
-                    color: 'white'
-                }}
-                boxShadow='2xl'
-            />
+            {!isExpanded && (
+                <IconButton
+                    icon={
+                        <Icon
+                            as={isExpanded ? FiX : FiSmile}
+                            fontSize={`${buttonSize - 16}px`}
+                        />
+                    }
+                    aria-label="Abrir chat"
+                    rounded='full'
+                    w={`${buttonSize}px`}
+                    h={`${buttonSize}px`}
+                    onClick={onToggle}
+                    color='white'
+                    cursor='pointer'
+                    colorScheme='orange'
+                    bg={color}
+                    _hover={{
+                        bg: color,
+                        color: 'white'
+                    }}
+                    boxShadow='2xl'
+                />
+            )}
         </Flex>
     );
 }
