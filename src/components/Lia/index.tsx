@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { IBot } from '../../@types/bot';
 import { usePlugin } from '../../services/plugin/hook';
 import { useTheme } from '../../theme/theme.hook';
-import { MessageEventType } from './message-events.enum';
+import { useSessionContext } from '../../services/session/hook';
 
 interface Props {
 	allowDarkTheme: boolean;
@@ -11,11 +11,12 @@ interface Props {
 	user?: string;
 }
 
-export function Lia({allowDarkTheme, bot, src, user}: Props) {
-	const conversuSession = 'conversu-session';
+export function Lia({ allowDarkTheme, bot, src, user }: Props) {
 
-	const {borderRadius} = usePlugin();
-	const {isDarkTheme} = useTheme();
+
+	const { borderRadius } = usePlugin();
+	const { isDarkTheme } = useTheme();
+	const { handleMessageEvents, session } = useSessionContext();
 
 	const params = {
 		type: 'plugin',
@@ -25,102 +26,77 @@ export function Lia({allowDarkTheme, bot, src, user}: Props) {
 		username: btoa(user ?? 'unknown'),
 	};
 
-	const [sessionId, setSessionId] = useState<string | null>(null);
+	const listener = (e: MessageEvent) => {
+		return handleMessageEvents(e, src);
+	};
 
 	useEffect(() => {
-		// Ao encerrar uma sessão só remover ela do localStorage (Verificar se precisa remover do use state sessionId)
-		const handleClosedSession = async () => {
-			localStorage.removeItem(conversuSession);
-		};
 
-		// Se tiver uma sessão no localStorage ele abre ela, senão abre a nova sessão
-		const handleOpenedSession = async (
-			sessionId: string
-		) => {
-			const storageSessionId = localStorage.getItem(conversuSession);
-
-			if (storageSessionId) {
-				setSessionId(storageSessionId);
-				return;
-			}
-
-			localStorage.setItem(conversuSession, sessionId);
-			setSessionId(sessionId);
-		};
-
-		const handleLogout = async () => {
-			localStorage.removeItem(conversuSession);
-			setSessionId(null);
-		}
-
-		const handleMessageEvents = (event: MessageEvent) => {
-			if (event.origin !== src) return;
-
-			const data = JSON.parse(event.data);
-
-			const eventType: MessageEventType = data.event;
-
-			switch (eventType) {
-				case MessageEventType.OPENED:
-					handleOpenedSession(data.sessionId);
-					break;
-				case MessageEventType.CLOSED:
-					handleClosedSession();
-					break;
-				case MessageEventType.LOGOUT:
-					handleLogout();
-					break;
-				default:
-					break;
-			}
-		};
-
-		window.addEventListener('message', handleMessageEvents);
+		window.addEventListener('message', listener);
 
 		return () => {
-			window.removeEventListener('message', handleMessageEvents);
+			window.removeEventListener('message', listener);
 		};
-	}, [bot.alias, src, sessionId]);
+	}, [bot.alias, src]);
 
 	useEffect(() => {
 		const iframe = document.getElementById(bot.uuid);
 
-		const disableScroll = () => {
-			document.body.style.overflow = 'hidden';
+		const disableScroll = (event: any) => {
+			event.preventDefault();
+			event.stopPropagation();
 		};
 
-		const enableScroll = () => {
-			document.body.style.overflow = 'auto';
-		};
+		if (iframe) {
+			iframe.addEventListener('mouseenter', () => {
+				document.addEventListener('wheel', disableScroll, { passive: false });
+				document.addEventListener('touchmove', disableScroll, { passive: false });
+			});
 
-		iframe?.addEventListener('mouseenter', disableScroll);
-		iframe?.addEventListener('mouseleave', enableScroll);
+			iframe.addEventListener('mouseleave', () => {
+				document.removeEventListener('wheel', disableScroll);
+				document.removeEventListener('touchmove', disableScroll);
+			});
+		}
 
-		// Clean up event listeners on component unmount
 		return () => {
-			iframe?.removeEventListener('mouseenter', disableScroll);
-			iframe?.removeEventListener('mouseleave', enableScroll);
+			document.removeEventListener('wheel', disableScroll);
+			document.removeEventListener('touchmove', disableScroll);
 		};
 	}, [bot.uuid]);
 
+
+	const queryParams = `${Object.entries(params).map((e) => e.join('=')).join('&')}`
+
 	return (
-		<iframe
-			src={new URL(
-				`${src}/${bot.alias}${
-					sessionId ? `/i/${sessionId}` : ''
-				}?${Object.entries(params)
-					.map((e) => e.join('='))
-					.join('&')}`
-			).toString()}
-			id={bot.uuid}
-			title="conversu-plugin"
-			width="100%"
-			height="100%"
-			style={{
-				border: 'none',
-				borderRadius: borderRadius as string,
-				pointerEvents: 'auto',
-			}}
-		/>
+		<>{
+			session ? (
+				<iframe
+					src={new URL(`${src}/${bot.alias}/i/${session}?${queryParams}`).toString()}
+					id={bot.uuid}
+					title="conversu-plugin"
+					width="100%"
+					height="100%"
+					style={{
+						border: 'none',
+						borderRadius: borderRadius as string,
+						pointerEvents: 'auto',
+					}}
+				/>
+			) : (
+				<iframe
+					src={new URL(`${src}/${bot.alias}?${queryParams}`).toString()}
+					id={bot.uuid}
+					title="conversu-plugin"
+					width="100%"
+					height="100%"
+					style={{
+						border: 'none',
+						borderRadius: borderRadius as string,
+						pointerEvents: 'auto',
+					}}
+				/>
+			)
+		}</>
 	);
 }
