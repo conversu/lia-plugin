@@ -1,95 +1,126 @@
-import { IBot } from "../../@types/bot";
-import { useTheme } from "../../theme/theme.hook";
-import { usePlugin } from "../../services/plugin/hook";
-import { useEffect } from "react";
-
+import { useEffect, useState } from 'react';
+import { IBot } from '../../@types/bot';
+import { usePlugin } from '../../services/plugin/hook';
+import { useTheme } from '../../theme/theme.hook';
+import { MessageEventType } from './message-events.enum';
 
 interface Props {
-    allowDarkTheme: boolean;
-    bot: IBot;
-    src: string;
-    user?: string;
+	allowDarkTheme: boolean;
+	bot: IBot;
+	src: string;
+	user?: string;
 }
 
-export function Lia({
-    allowDarkTheme,
-    bot,
-    src,
-    user
-}: Props) {
+export function Lia({allowDarkTheme, bot, src, user}: Props) {
+	const conversuSession = 'conversu-session';
 
-    const { borderRadius } = usePlugin();
-    const { isDarkTheme } = useTheme();
+	const {borderRadius} = usePlugin();
+	const {isDarkTheme} = useTheme();
 
-    const params = {
-        'type': 'plugin',
-        'theme': isDarkTheme && allowDarkTheme ? 'dark' : 'light',
-        'allow-toggle': allowDarkTheme,
-        'origin': btoa(window.location.origin),
-        'username': btoa(user ?? 'unknown')
-    };
+	const params = {
+		type: 'plugin',
+		theme: isDarkTheme && allowDarkTheme ? 'dark' : 'light',
+		'allow-toggle': allowDarkTheme,
+		origin: btoa(window.location.origin),
+		username: btoa(user ?? 'unknown'),
+	};
 
+	const [sessionId, setSessionId] = useState<string | null>(null);
 
-    // useEffect(() => {
-    //     const handleMessage = (event: any) => {
-    //       // Validate the origin of the message
-    //       console.debug('-----------------')
-    //       console.debug(event)
-    //       if (event.origin !== src) {
-    //         return; // Ignore the message if it's from an untrusted domain
-    //       }
+	useEffect(() => {
+		// Ao encerrar uma sessão só remover ela do localStorage (Verificar se precisa remover do use state sessionId)
+		const handleClosedSession = async () => {
+			localStorage.removeItem(conversuSession);
+		};
 
-    //       // Access the data sent from the iframe
-    //       const receivedData = event.data;
-    //       console.debug("Message received from iframe:", receivedData);
+		// Se tiver uma sessão no localStorage ele abre ela, senão abre a nova sessão
+		const handleOpenedSession = async (
+			sessionId: string
+		) => {
+			const storageSessionId = localStorage.getItem(conversuSession);
 
-    //       // Perform actions based on the received message
-    //       // e.g., updating state, triggering side effects, etc.
-    //     };
+			if (storageSessionId) {
+				setSessionId(storageSessionId);
+				return;
+			}
 
-    //     // Add the event listener
-    //     window.addEventListener("message", handleMessage);
+			localStorage.setItem(conversuSession, sessionId);
+			setSessionId(sessionId);
+		};
 
-    //     // Clean up the event listener on component unmount
-    //     return () => {
-    //       window.removeEventListener("message", handleMessage);
-    //     };
-    //   }, [src]);
+		const handleLogout = async () => {
+			localStorage.removeItem(conversuSession);
+			setSessionId(null);
+		}
 
-    useEffect(() => {
-        const iframe = document.getElementById(bot.uuid);
+		const handleMessageEvents = (event: MessageEvent) => {
+			if (event.origin !== src) return;
 
-        const disableScroll = () => {
-            document.body.style.overflow = "hidden";
-        };
+			const data = JSON.parse(event.data);
 
-        const enableScroll = () => {
-            document.body.style.overflow = "auto";
-        };
+			const eventType: MessageEventType = data.event;
 
-        iframe?.addEventListener("mouseenter", disableScroll);
-        iframe?.addEventListener("mouseleave", enableScroll);
+			switch (eventType) {
+				case MessageEventType.OPENED:
+					handleOpenedSession(data.sessionId);
+					break;
+				case MessageEventType.CLOSED:
+					handleClosedSession();
+					break;
+				case MessageEventType.LOGOUT:
+					handleLogout();
+					break;
+				default:
+					break;
+			}
+		};
 
-        // Clean up event listeners on component unmount
-        return () => {
-            iframe?.removeEventListener("mouseenter", disableScroll);
-            iframe?.removeEventListener("mouseleave", enableScroll);
-        };
-    }, [])
+		window.addEventListener('message', handleMessageEvents);
 
+		return () => {
+			window.removeEventListener('message', handleMessageEvents);
+		};
+	}, [bot.alias, src, sessionId]);
 
-    return (
-        <iframe
-            src={new URL(`${src}/${bot.alias}?${Object.entries(params).map(e => e.join('=')).join('&')}`).toString()}
-            id={bot.uuid}
-            title='conversu-plugin'
-            width='100%'
-            height='100%'
-            style={{
-                border: 'none',
-                borderRadius: borderRadius as string,
-                pointerEvents: 'auto'
-            }}
-        />
-    )
+	useEffect(() => {
+		const iframe = document.getElementById(bot.uuid);
+
+		const disableScroll = () => {
+			document.body.style.overflow = 'hidden';
+		};
+
+		const enableScroll = () => {
+			document.body.style.overflow = 'auto';
+		};
+
+		iframe?.addEventListener('mouseenter', disableScroll);
+		iframe?.addEventListener('mouseleave', enableScroll);
+
+		// Clean up event listeners on component unmount
+		return () => {
+			iframe?.removeEventListener('mouseenter', disableScroll);
+			iframe?.removeEventListener('mouseleave', enableScroll);
+		};
+	}, [bot.uuid]);
+
+	return (
+		<iframe
+			src={new URL(
+				`${src}/${bot.alias}${
+					sessionId ? `/i/${sessionId}` : ''
+				}?${Object.entries(params)
+					.map((e) => e.join('='))
+					.join('&')}`
+			).toString()}
+			id={bot.uuid}
+			title="conversu-plugin"
+			width="100%"
+			height="100%"
+			style={{
+				border: 'none',
+				borderRadius: borderRadius as string,
+				pointerEvents: 'auto',
+			}}
+		/>
+	);
 }
