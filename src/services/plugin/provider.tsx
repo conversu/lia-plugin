@@ -142,7 +142,7 @@ export function PluginProvider({
             return window.innerHeight// - buttonSize
         }
 
-        return 700
+        return 820
     }
 
 
