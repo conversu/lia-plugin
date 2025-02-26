@@ -14,7 +14,8 @@ const QUERY_CLIENT = new QueryClient({
     defaultOptions: {
         mutations: {
             cacheTime: 1000 * 60 * 10, // 10 min
-            retryDelay: 1000 * 60 // 1 min
+            retryDelay: 1000 * 60, // 1 min
+            // retry: 1,
         }
     },
 })
@@ -44,7 +45,8 @@ root.render(
                                 color={div.dataset.color}
                                 zIndex={div.dataset.zIndex ? Number(div.dataset.zIndex) : 9998}
                                 tooltipColor={div.dataset.tooltipColor}
-                                user={div.dataset.user}
+                                username={div.dataset.user ?? div.dataset.username}
+                                name={div.dataset.name}
                             />
                         </SessionProvider>
                     </ThemeProvider>

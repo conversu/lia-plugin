@@ -1,7 +1,6 @@
 import { Plugin } from './components/plugin';
 import { usePlugin } from './services/plugin/hook';
 import { Lia } from './components/Lia';
-import { useState } from 'react';
 
 
 interface Props {
@@ -10,7 +9,8 @@ interface Props {
   border?: string;
   zIndex?: number;
   tooltipColor?: string;
-  user?: string;
+  username?: string | null;
+  name?: string | null;
 }
 
 function App({
@@ -19,13 +19,11 @@ function App({
   border,
   tooltipColor,
   zIndex = 9998,
-  user
+  username = null,
+  name = null,
 }: Props) {
 
   const { bot, url, buttonSize } = usePlugin();
-
-  
-
 
   return (
     <Plugin.Container
@@ -43,7 +41,8 @@ function App({
             allowDarkTheme={allowDarkTheme}
             bot={bot}
             src={url}
-            user={user}
+            username={username}
+            name={name}
           />
         </Plugin.Popover.Content>
         <Plugin.Popover.Button
