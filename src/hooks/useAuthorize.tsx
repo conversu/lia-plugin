@@ -64,7 +64,7 @@ export const useAuthorize = (params: {
         {
           headers: {
             'x-origin': window.location.href,
-            requester: process.env.API_KEY,
+            // requester: process.env.API_KEY,
             'x-current-time': format(new Date(), 'HH:mm'),
             'x-timestamp': formatISO(new Date()),
             'x-timezone': Intl.DateTimeFormat().resolvedOptions().timeZone
