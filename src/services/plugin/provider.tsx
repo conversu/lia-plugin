@@ -178,8 +178,6 @@ export function PluginProvider({
 
     if (status === 'authorized') {
 
-        console.log(getHeight())
-
         return (
             <PluginContext.Provider value={{
                 url: url as string,
