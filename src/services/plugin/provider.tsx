@@ -134,15 +134,27 @@ export function PluginProvider({
     }
 
     function getHeight() {
+
         if (height) {
-            return Number(height)
+
+            if (window.innerHeight >= Number(height)) {
+
+                return Number(height)
+            }
+
+            return window.innerHeight
         }
 
         if (isShortVersion) {
             return window.innerHeight// - buttonSize
         }
 
-        return 820
+        if (window.innerHeight >= 820) {
+
+            return 820;
+        }
+
+        return window.innerHeight
     }
 
 

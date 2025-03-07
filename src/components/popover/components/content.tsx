@@ -9,7 +9,7 @@ interface Props {
 
 function Content({ children, border }: Props) {
 
-    const { borderRadius, isShortVersion, isExpanded, height, width, buttonSize } = usePlugin();
+    const { borderRadius, isShortVersion, isExpanded, height, width } = usePlugin();
 
     return (
         <Box w='100%' h='100%'>
@@ -17,7 +17,8 @@ function Content({ children, border }: Props) {
                 <Center w='100%' h='100%'>
                     <Flex
                         w={isShortVersion ? `${width - 16}px` : '100%'}
-                        h={`${height - buttonSize}px`}
+                        h='96vh'
+                        maxH={height}
                         flexDir='column'
                         align='center'
                         justify='space-between'
