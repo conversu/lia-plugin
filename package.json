@@ -1,6 +1,6 @@
 {
   "name": "@conversu/plugin",
-  "version": "2.6.4",
+  "version": "2.6.5",
   "private": false,
   "scripts": {
     "start": "react-scripts start",

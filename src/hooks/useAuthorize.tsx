@@ -11,7 +11,6 @@ const parseTime = (time: string): [number, number] => {
 };
 
 const isWithinSchedule = (start?: string | null, end?: string | null): boolean => {
-  console.debug(`[CONVERSU] start: ${start} | end: ${end}`)
   if (!start || !end) {
     return true; // No restrictions
   }
