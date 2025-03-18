@@ -1,9 +1,11 @@
-import { Button, Flex, Icon, IconButton, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, IconButton, Text } from "@chakra-ui/react";
 import { FiSmile, FiX } from "react-icons/fi";
 import { conversuColors } from "../../../theme/theme.global";
 import { usePlugin } from "../../../services/plugin/hook";
 import React from "react";
 import { generateKey } from "../../../utils/utils";
+import { RiArrowDownDoubleLine } from "react-icons/ri";
+
 
 
 interface Props {
@@ -109,21 +111,33 @@ export default function PopoverButton({
             )}
             {isExpanded && (
                 <Button
-                    w='100%'
                     onClick={onToggle}
                     variant='unstyled'
-                    bg='transparent'
-                    borderRadius='0px 0px 16px 15px'
+                    bg='gray.50'
+                    w='125px'
+                    borderRadius='0px 0px 8px 8px'
+                    boxShadow='md'
                     color={bot.layout.colors.primary}
                     _hover={{
                         color: bot.layout.colors.secondary,
-                        bgGradient: 'linear(to-r, transparent 5%, gray.50, transparent 95%)',
-                        border: 'none'
+                        filter: 'brightness(0.98)',
                     }}
                     border='none'
                     size='xs'
                 >
-                    minimizar
+                    <Flex
+                        w='100%'
+                        flexDir='row'
+                        align='center'
+                        justify='space-between'
+                        px='.25rem'
+                    >
+                        <Box w='1rem' />
+                        <Text w='100%' textAlign='center'>
+                            minimizar
+                        </Text>
+                        <Icon as={RiArrowDownDoubleLine} fontSize='1rem' />
+                    </Flex>
                 </Button>
             )}
         </Flex>
