@@ -120,6 +120,7 @@ export default function PopoverButton({
                     color={bot.layout.colors.primary}
                     _hover={{
                         color: bot.layout.colors.secondary,
+                        bg: 'gray.50',
                         filter: 'brightness(0.98)',
                     }}
                     border='none'
@@ -127,6 +128,7 @@ export default function PopoverButton({
                 >
                     <Flex
                         w='100%'
+                        h='100%'
                         flexDir='row'
                         align='center'
                         justify='space-between'
