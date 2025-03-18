@@ -1,4 +1,4 @@
-import { Flex, Icon, IconButton, Text } from "@chakra-ui/react";
+import { Button, Flex, Icon, IconButton, Text } from "@chakra-ui/react";
 import { FiSmile, FiX } from "react-icons/fi";
 import { conversuColors } from "../../../theme/theme.global";
 import { usePlugin } from "../../../services/plugin/hook";
@@ -35,7 +35,12 @@ export default function PopoverButton({
     const buttonSize = size * (isExpanded ? 0.6 : 1) * (isShortVersion ? 0.8 : 1)
 
     return (
-        <Flex flexDir='column' gap='1rem' {...contentPositionProps}>
+        <Flex
+            w='100%'
+            flexDir='column'
+            gap='1rem'
+            {...contentPositionProps}
+        >
             {allowTooltip && showTooltip && (
                 <Flex
                     w={`${width}px`}
@@ -101,6 +106,25 @@ export default function PopoverButton({
                     }}
                     boxShadow='2xl'
                 />
+            )}
+            {isExpanded && (
+                <Button
+                    w='100%'
+                    onClick={onToggle}
+                    variant='unstyled'
+                    bg='transparent'
+                    borderRadius='0px 0px 16px 15px'
+                    color={bot.layout.colors.primary}
+                    _hover={{
+                        color: bot.layout.colors.secondary,
+                        bgGradient: 'linear(to-r, transparent 5%, gray.50, transparent 95%)',
+                        border: 'none'
+                    }}
+                    border='none'
+                    size='xs'
+                >
+                    minimizar
+                </Button>
             )}
         </Flex>
     );

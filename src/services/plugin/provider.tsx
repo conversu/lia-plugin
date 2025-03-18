@@ -146,12 +146,18 @@ export function PluginProvider({
         }
 
         if (isShortVersion) {
-            return window.innerHeight// - buttonSize
+
+            if (window.innerHeight >= Number(height)) {
+
+                return Number(height)
+            }
+
+            return window.innerHeight - 64
         }
 
-        if (window.innerHeight >= 820) {
+        if (window.innerHeight >= 720) {
 
-            return 820;
+            return 720;
         }
 
         return window.innerHeight

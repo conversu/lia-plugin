@@ -1,6 +1,7 @@
-import { Box, Center, Flex, SlideFade, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, SlideFade, useColorModeValue } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { usePlugin } from "../../../services/plugin/hook";
+
 
 interface Props {
     children: ReactNode;
@@ -11,10 +12,11 @@ function Content({ children, border }: Props) {
 
     const { borderRadius, isShortVersion, isExpanded, height, width } = usePlugin();
 
+
     return (
         <Box w='100%' h='100%'>
             <SlideFade in={isExpanded} offsetY='1rem'>
-                <Center w='100%' h='100%'>
+                <Flex w='100%' h='100%' flexDir='row' align='center' justify='center'>
                     <Flex
                         w={isShortVersion ? `${width - 16}px` : '100%'}
                         h='96vh'
@@ -31,7 +33,7 @@ function Content({ children, border }: Props) {
                     >
                         {children}
                     </Flex>
-                </Center>
+                </Flex>
             </SlideFade>
         </Box>
     );

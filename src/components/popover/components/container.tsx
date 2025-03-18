@@ -11,7 +11,6 @@ interface Props {
 }
 
 export default function Container({
-    buttonSize,
     children
 }: Props) {
 
@@ -22,8 +21,7 @@ export default function Container({
         <Flex
             h='100%'
             w={`${width}px`}
-            maxH={`${height - (buttonSize + 16)}px`}
-            gap='1rem'
+            maxH={`${height - 4}px`}
             {...contentPositionProps}
         >
             {children}
