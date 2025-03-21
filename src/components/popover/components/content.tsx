@@ -68,8 +68,6 @@ function Content({ children, border, color = conversuColors.orange }: Props) {
         allowExpand
     } = usePlugin();
 
-    console.log('AQUIII', allowExpand)
-
     return (
         <Box w='100%' h='100%'>
             <SlideFade in={isExpanded} offsetY='1rem'>

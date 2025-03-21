@@ -39,7 +39,7 @@ root.render(
                     startHour={div.dataset.startHour}
                     endHour={div.dataset.endHour}
                     mode={div.dataset.mode ? PluginMode[div.dataset.mode?.toUpperCase() as keyof typeof PluginMode] || PluginMode.POPOVER : PluginMode.POPOVER}
-                    allowExpand={typeof div.dataset.allowExpand === 'boolean' && Boolean(div.dataset.allowExpand)}
+                    allowExpand={div.dataset.allowExpand === 'true'}
                     btnType={!!div.dataset.btnType ? div.dataset.btnType.toLowerCase() as 'circle' | 'badge' : 'circle'}
                 >
                     <ThemeProvider
