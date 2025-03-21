@@ -1,57 +1,90 @@
 import { Plugin } from './components/plugin';
 import { usePlugin } from './services/plugin/hook';
 import { Lia } from './components/Lia';
-
+import { PluginMode } from './services/plugin/types';
+import { Box } from '@chakra-ui/react';
 
 interface Props {
   allowDarkTheme?: boolean;
-  color?: string;
   border?: string;
   zIndex?: number;
   tooltipColor?: string;
   username?: string | null;
   name?: string | null;
+  className?: string;
+  btn: {
+    type?: 'circle' | 'badge';
+    color?: string;
+    icon?: string;
+    title?: string;
+  }
 }
 
 function App({
   allowDarkTheme = false,
-  color,
   border,
   tooltipColor,
   zIndex = 9998,
   username = null,
   name = null,
+  className,
+  btn
 }: Props) {
 
-  const { bot, url, buttonSize } = usePlugin();
+  const { bot, url, buttonSize, mode, component } = usePlugin();
+
+
+  if (mode === PluginMode.POPOVER) {
+    return (
+      <Plugin.Container
+        props={{
+          zIndex
+        }}
+      >
+        <Plugin.Popover.Container
+          buttonSize={buttonSize}
+        >
+          <Plugin.Popover.Content
+            border={border}
+            color={btn.color}
+          >
+            <Lia
+              allowDarkTheme={allowDarkTheme}
+              bot={bot}
+              src={url}
+              username={username}
+              name={name}
+            />
+          </Plugin.Popover.Content>
+          <Plugin.Popover.Button
+            size={buttonSize}
+            tooltip={tooltipColor}
+            {...btn}
+          />
+        </Plugin.Popover.Container>
+      </Plugin.Container>
+    );
+  }
+
 
   return (
-    <Plugin.Container
-      props={{
-        zIndex
-      }}
+    <Box
+      width={component?.width ?? '100%'}
+      height={component?.height ?? '100%'}
+      display='flex'
+      flexDirection='column'
+      justifyContent='center'
+      alignItems='center'
+      className={className}
     >
-      <Plugin.Popover.Container
-        buttonSize={buttonSize}
-      >
-        <Plugin.Popover.Content
-          border={border}
-        >
-          <Lia
-            allowDarkTheme={allowDarkTheme}
-            bot={bot}
-            src={url}
-            username={username}
-            name={name}
-          />
-        </Plugin.Popover.Content>
-        <Plugin.Popover.Button
-          color={color}
-          size={buttonSize}
-          tooltip={tooltipColor}
-        />
-      </Plugin.Popover.Container>
-    </Plugin.Container>
+      <Lia
+        allowDarkTheme={allowDarkTheme}
+        bot={bot}
+        src={url}
+        username={username}
+        name={name}
+      />
+    </Box >
   );
 }
 

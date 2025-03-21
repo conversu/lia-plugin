@@ -18,8 +18,20 @@ export interface IPluginContext {
     onOpen: () => void;
     showTooltip: boolean;
     onTooltipClose: () => void;
-    height: number;
-    width: number;
+    popover: {
+        height: number;
+        width: number;
+    },
+    component: {
+        height?: string | number;
+        width?: string | number;
+        maxWidth?: string | number;
+        maxHeight?: string | number;
+    }
+    mode: 'POPOVER' | 'COMPONENT';
+    isMaximized: boolean;
+    onMaximizeToggle: () => void;
+    allowExpand: boolean;
 }
 
 

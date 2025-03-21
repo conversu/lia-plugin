@@ -9,6 +9,7 @@ import { IBot } from "../../@types/bot";
 import { Error } from "../../components/Error";
 import { PluginPosition } from "../../@types/plugin";
 import { useAuthorize } from "../../hooks/useAuthorize";
+import { PluginMode } from "./types";
 
 
 interface Props {
@@ -20,8 +21,13 @@ interface Props {
     buttonSize?: number;
     height?: string;
     width?: string;
+    maxHeight?: string;
+    maxWidth?: string;
     startHour?: string | null;
     endHour?: string | null;
+    mode?: PluginMode;
+    allowExpand?: boolean;
+    btnType?: 'circle' | 'badge';
 }
 
 
@@ -33,14 +39,21 @@ export function PluginProvider({
     position = 'bottom-right',
     buttonSize = 64,
     height,
+    width,
+    maxHeight,
+    maxWidth,
     startHour = null,
-    endHour = null
+    endHour = null,
+    mode = PluginMode.POPOVER,
+    allowExpand = true,
+    btnType = 'circle'
 }: Props) {
 
 
     const [isExpanded, setIsExpanded] = useState(false);
 
     const { isOpen: isTooltipOpen, onClose: onTooltipClose, onOpen: onTooltipOpen } = useDisclosure();
+    const { isOpen: isMaximized, onToggle: onMaximizeToggle, onClose: onMinimize } = useDisclosure();
 
     const { bot, error, status, url, refetch } = useAuthorize({
         dataSet,
@@ -52,13 +65,14 @@ export function PluginProvider({
 
     useEffect(() => {
         refetch();
+        onMinimize();
     }, []);
 
 
     const isShortVersion = window.innerWidth <= 400;
 
-    const yAxisPosition = isShortVersion ? '1' : '4';
-    const xAxisPosition = isShortVersion ? isExpanded ? '0' : '1' : '4';
+    const yAxisPosition = btnType === 'badge' ? '0' : '2';
+    const xAxisPosition = isShortVersion ? isExpanded ? isMaximized ? '1' : '0' : '1' : '2';
 
 
     const containerPositionProps = {
@@ -111,6 +125,7 @@ export function PluginProvider({
     }
 
     function getWidth() {
+
         if (!isExpanded && !bot?.tooltip) {
             return buttonSize;
         }
@@ -122,12 +137,17 @@ export function PluginProvider({
 
         if (isShortVersion) {
 
-            width = window.innerWidth
+            return window.innerWidth
         }
 
         if (!!bot?.tooltip && isTooltipOpen && !isExpanded) {
 
             return width * 0.75
+        }
+
+
+        if (isMaximized) {
+            return window.innerWidth
         }
 
         return width
@@ -153,6 +173,11 @@ export function PluginProvider({
             }
 
             return window.innerHeight - 64
+        }
+
+
+        if (isMaximized) {
+            return window.innerHeight
         }
 
         if (window.innerHeight >= 720) {
@@ -200,8 +225,20 @@ export function PluginProvider({
                 onOpen: () => setIsExpanded(true),
                 onToggle: () => setIsExpanded(!isExpanded),
                 onTooltipClose,
-                height: getHeight(),
-                width: getWidth()
+                popover: {
+                    height: getHeight(),
+                    width: getWidth(),
+                },
+                component: {
+                    height,
+                    width,
+                    maxHeight,
+                    maxWidth
+                },
+                mode,
+                isMaximized: isMaximized && allowExpand,
+                onMaximizeToggle,
+                allowExpand
             }}
             >
                 {children}

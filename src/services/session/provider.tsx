@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useState } from "react";
 import { SessionContext } from "./context";
 import { usePlugin } from "../plugin/hook";
 
@@ -12,7 +12,8 @@ export enum MessageEventType {
     LOGOUT = 'LOGOUT',
     OPENED = 'OPENED',
     CLOSED = 'CLOSED',
-    POPOVER_CLOSE = 'POPOVER_CLOSE'
+    POPOVER_CLOSE = 'POPOVER_CLOSE',
+    POPOVER_EXPAND = 'POPOVER_EXPAND'
 }
 
 
@@ -22,14 +23,12 @@ export function SessionProvider({ children }: Props) {
 
     const [session, setSession] = useState<string | null>(localStorage.getItem(CONVERSU_SESSION) ?? null);
 
-    const { onClose } = usePlugin();
+    const { onClose, onMaximizeToggle } = usePlugin();
 
-    // Ao encerrar uma sessão só remover ela do localStorage (Verificar se precisa remover do use state sessionId)
     const handleClosedSession = () => {
         localStorage.removeItem(CONVERSU_SESSION);
     };
 
-    // Se tiver uma sessão no localStorage ele abre ela, senão abre a nova sessão
     const handleOpenedSession = (
         sessionId: string
     ) => {
@@ -68,6 +67,9 @@ export function SessionProvider({ children }: Props) {
                 break;
             case MessageEventType.POPOVER_CLOSE:
                 onClose();
+                break;
+            case MessageEventType.POPOVER_EXPAND:
+                onMaximizeToggle();
                 break;
             default:
                 break;

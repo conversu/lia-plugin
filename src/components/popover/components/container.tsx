@@ -14,14 +14,14 @@ export default function Container({
     children
 }: Props) {
 
-    const { contentPositionProps, height, width  } = usePlugin();
+    const { contentPositionProps, popover } = usePlugin();
 
 
     return (
         <Flex
             h='100%'
-            w={`${width}px`}
-            maxH={`${height - 4}px`}
+            w={`${popover.width}px`}
+            maxH={`${popover.height - 4}px`}
             {...contentPositionProps}
         >
             {children}

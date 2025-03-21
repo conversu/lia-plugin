@@ -1,25 +1,33 @@
-import { Box, Button, Flex, Icon, IconButton, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Icon, IconButton, Img, Text } from "@chakra-ui/react";
 import { FiSmile, FiX } from "react-icons/fi";
 import { conversuColors } from "../../../theme/theme.global";
 import { usePlugin } from "../../../services/plugin/hook";
 import React from "react";
 import { generateKey } from "../../../utils/utils";
 import { RiArrowDownDoubleLine } from "react-icons/ri";
+import { TbMessageCircleFilled } from "react-icons/tb";
+
 
 
 
 interface Props {
+    type?: 'circle' | 'badge';
     color?: string;
+    icon?: string;
     tooltip?: string;
     size?: number;
     allowTooltip?: boolean;
+    title?: string;
 }
 
 export default function PopoverButton({
     color = conversuColors.orange,
+    type = 'circle',
+    icon,
     tooltip,
     allowTooltip = true,
-    size = 64
+    size = 64,
+    title
 }: Props) {
 
     const {
@@ -27,11 +35,11 @@ export default function PopoverButton({
         onToggle,
         isShortVersion,
         contentPositionProps,
-        width,
+        popover,
         borderRadius,
         bot,
         showTooltip,
-        onTooltipClose
+        onTooltipClose,
     } = usePlugin();
 
     const buttonSize = size * (isExpanded ? 0.6 : 1) * (isShortVersion ? 0.8 : 1)
@@ -45,7 +53,7 @@ export default function PopoverButton({
         >
             {allowTooltip && showTooltip && (
                 <Flex
-                    w={`${width}px`}
+                    w={`${popover.width}px`}
                     pl='1rem'
                     py='1rem'
                     flexDir='row'
@@ -86,41 +94,67 @@ export default function PopoverButton({
                 </Flex>
             )}
             {!isExpanded && (
-                <IconButton
-                    icon={
-                        <Icon
-                            as={isExpanded ? FiX : FiSmile}
-                            fontSize={`${buttonSize - 16}px`}
-                        />
-                    }
+                <Button
                     aria-label="Abrir chat"
-                    rounded='full'
-                    w={`${buttonSize}px`}
-                    h={`${buttonSize}px`}
+                    rounded={type === 'circle' ? 'full' : undefined}
+                    w={type === 'badge' ? undefined : `${buttonSize}px`}
+                    h={type === 'badge' ? '2rem' : `${buttonSize}px`}
+                    borderRadius={type === 'badge' ? '8px 8px 0px 0px' : undefined}
                     onClick={onToggle}
                     color='white'
                     cursor='pointer'
-                    colorScheme='orange'
+                    colorScheme='gray'
                     bg={color}
                     _hover={{
                         bg: color,
                         color: 'white'
                     }}
+                    p='.5rem'
                     boxShadow='2xl'
-                />
+                    leftIcon={type === 'badge' ? <Icon as={TbMessageCircleFilled} /> : undefined}
+                >
+                    {type === 'badge' ? (
+                        <>{title}</>
+                    ) : (
+                        <>
+                            <Center
+                                w='100%'
+                                h='100%'
+                                maxW='2rem'
+                                maxH='2rem'
+                            >
+                                {
+                                    !!icon ? (
+                                        <Img
+                                            w='100%'
+                                            h='100%'
+                                            rounded='full'
+                                            src={icon}
+                                        />
+                                    ) : (
+                                        <Icon
+                                            as={isExpanded ? FiX : FiSmile}
+                                            fontSize='2rem'
+                                        />
+                                    )
+                                }
+                            </Center>
+                        </>
+                    )}
+                </Button>
             )}
             {isExpanded && (
                 <Button
                     onClick={onToggle}
                     variant='unstyled'
-                    bg='gray.50'
+                    bg={color}
                     w='125px'
                     borderRadius='0px 0px 8px 8px'
                     boxShadow='md'
-                    color={bot.layout.colors.primary}
+                    color='white'
                     _hover={{
-                        color: bot.layout.colors.secondary,
-                        bg: 'gray.50',
+                        color: 'white',
+                        bg: color,
                         filter: 'brightness(0.98)',
                     }}
                     border='none'

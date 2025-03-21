@@ -1,35 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div style={{
-      minHeight: '7000px'
+      width: '100vw',
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      margin: 0,
+      padding: 0,
+
     }}>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <header
+        style={{
+          width: '100vw',
+          height: '5rem',
+          background: 'rgba(0, 0, 0, 0.24)'
+        }}
+      >
+        header
+      </header>
+      <div
+        style={{
+          width: '100vw',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <aside
+          style={{
+            width: '10vw',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: '2rem',
+            background: '#E2E8F0'
+          }}
+        >
+          sidebar
+        </aside>
+        <main
+          style={{
+            width: '98vw',
+            height: '100%',
+            color: 'black'
+          }}
+        >
+          {/* <div
+            id="conversu-plugin"
+            data-token="B-PLUG-D3E4ED1E-9EC8-4BB6-8A9A-C7BE837C6A0E"
+            data-mode="COMPONENT"
+            data-width='90vw'
+            data-height='90vh'
+          /> */}
+
+        </main>
       </div>
-      <h1>SITE DA NAQUE</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
   )
 }

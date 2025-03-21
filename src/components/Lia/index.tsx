@@ -15,7 +15,7 @@ interface Props {
 export function Lia({ allowDarkTheme, bot, src, username, name }: Props) {
 
 
-	const { borderRadius } = usePlugin();
+	const { borderRadius, isMaximized, mode } = usePlugin();
 	const { isDarkTheme } = useTheme();
 	const { handleMessageEvents, session } = useSessionContext();
 
@@ -25,12 +25,16 @@ export function Lia({ allowDarkTheme, bot, src, username, name }: Props) {
 		'allow-toggle': allowDarkTheme,
 		origin: btoa(window.location.origin),
 		username: !!username ? btoa(username) : null,
-		name: !!name ? btoa(name) : null
+		name: !!name ? btoa(name) : null,
+		mode
 	};
 
 	const listener = (e: MessageEvent) => {
 		return handleMessageEvents(e, src);
 	};
+
+
+	useEffect(() => { }, [isMaximized])
 
 	useEffect(() => {
 
@@ -74,9 +78,10 @@ export function Lia({ allowDarkTheme, bot, src, username, name }: Props) {
 		<>{
 			session ? (
 				<iframe
-					src={new URL(`${src}/${bot.alias}/i/${session}?${queryParams}`).toString()}
 					id={bot.uuid}
+					src={new URL(`${src}/${bot.alias}/i/${session}?${queryParams}`).toString()}
 					title="conversu-plugin"
+					key={`${mode}-${isMaximized}-${window.innerWidth}x${window.innerHeight}`}
 					width="100%"
 					height="100%"
 					style={{
@@ -87,9 +92,10 @@ export function Lia({ allowDarkTheme, bot, src, username, name }: Props) {
 				/>
 			) : (
 				<iframe
-					src={new URL(`${src}/${bot.alias}?${queryParams}`).toString()}
 					id={bot.uuid}
+					src={new URL(`${src}/${bot.alias}?${queryParams}`).toString()}
 					title="conversu-plugin"
+					key={`${mode}-${isMaximized}-${window.innerWidth}x${window.innerHeight}`}
 					width="100%"
 					height="100%"
 					style={{

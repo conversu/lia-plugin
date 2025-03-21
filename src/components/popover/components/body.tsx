@@ -8,7 +8,7 @@ interface Props {
 
 export default function PopoverBody({ children }: Props) {
 
-    const { height } = usePlugin();
+    const { popover } = usePlugin();
 
     const headerSize = document.getElementById('popover-header')?.clientHeight ?? 0;
     const footerSize = document.getElementById('popover-footer')?.clientHeight ?? 0;
@@ -17,7 +17,7 @@ export default function PopoverBody({ children }: Props) {
     return (
         <Flex
             w='100%'
-            h={`${height - headerSize - footerSize}px)`}
+            h={`${popover.height - headerSize - footerSize}px)`}
             flexDir='column'
             align='center'
             justify='flex-start'
