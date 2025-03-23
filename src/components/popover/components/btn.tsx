@@ -159,21 +159,9 @@ export default function PopoverButton({
                     }}
                     border='none'
                     size='xs'
+                    rightIcon={<Icon as={RiArrowDownDoubleLine} />}
                 >
-                    <Flex
-                        w='100%'
-                        h='100%'
-                        flexDir='row'
-                        align='center'
-                        justify='space-between'
-                        px='.25rem'
-                    >
-                        <Box w='1rem' />
-                        <Text w='100%' textAlign='center'>
-                            minimizar
-                        </Text>
-                        <Icon as={RiArrowDownDoubleLine} fontSize='1rem' />
-                    </Flex>
+                    minimizar
                 </Button>
             )}
         </Flex>
