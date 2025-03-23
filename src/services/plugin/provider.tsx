@@ -155,6 +155,9 @@ export function PluginProvider({
 
     function getHeight() {
 
+        const minimizeButtonSize = 24;
+        const padding = minimizeButtonSize + 16
+
         if (height) {
 
             if (window.innerHeight >= Number(height)) {
@@ -162,7 +165,7 @@ export function PluginProvider({
                 return Number(height)
             }
 
-            return window.innerHeight 
+            return window.innerHeight - padding
         }
 
         if (isShortVersion) {
@@ -172,20 +175,20 @@ export function PluginProvider({
                 return Number(height)
             }
 
-            return window.innerHeight - 64
+            return window.innerHeight - padding
         }
 
 
         if (isMaximized) {
-            return window.innerHeight * 0.80 - 24
+            return window.innerHeight - padding
         }
 
-        if (window.innerHeight >= 720) {
+        if (window.innerHeight >= 720 + padding) {
 
             return 720;
         }
  
-        return window.innerHeight - 24
+        return window.innerHeight - padding
     }
 
 
