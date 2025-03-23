@@ -162,7 +162,7 @@ export function PluginProvider({
                 return Number(height)
             }
 
-            return window.innerHeight
+            return window.innerHeight 
         }
 
         if (isShortVersion) {
@@ -177,15 +177,15 @@ export function PluginProvider({
 
 
         if (isMaximized) {
-            return window.innerHeight
+            return window.innerHeight * 0.80 - 24
         }
 
         if (window.innerHeight >= 720) {
 
             return 720;
         }
-
-        return window.innerHeight
+ 
+        return window.innerHeight - 24
     }
 
 
