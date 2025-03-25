@@ -18,10 +18,19 @@ function App() {
         style={{
           width: '100vw',
           height: '5rem',
-          background: 'rgba(0, 0, 0, 0.24)'
+          background: 'rgba(0, 0, 0, 0.24)',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
-        header
+        <span style={{
+          width: '100%',
+          textAlign: 'center'
+        }}>
+          header
+        </span>
       </header>
       <div
         style={{
@@ -35,17 +44,22 @@ function App() {
       >
         <aside
           style={{
-            width: '10vw',
+            width: '15vw',
             height: '100%',
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'center',
             alignItems: 'center',
             gap: '2rem',
             background: '#E2E8F0'
           }}
         >
-          sidebar
+          <span style={{
+            width: '100%',
+            textAlign: 'center'
+          }}>
+            sidebar
+          </span>
         </aside>
         <main
           style={{

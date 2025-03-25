@@ -26,7 +26,8 @@ export function Lia({ allowDarkTheme, bot, src, username, name }: Props) {
 		origin: btoa(window.location.origin),
 		username: !!username ? btoa(username) : null,
 		name: !!name ? btoa(name) : null,
-		mode
+		mode,
+		isExpanded: isMaximized
 	};
 
 	const listener = (e: MessageEvent) => {
