@@ -57,7 +57,10 @@ root.render(
                                     icon: div.dataset.btnIcon,
                                     type: !!div.dataset.btnType ? div.dataset.btnType.toLowerCase() as 'circle' | 'badge' : 'circle',
                                     color: div.dataset.color ?? div.dataset.btnColor,
-                                    title: div.dataset.btnTitle
+                                    title: div.dataset.btnTitle,
+                                    tooltip: div.dataset.tooltip || null,
+                                    tooltipColor: div.dataset.tooltipColor || null,
+                                    tooltipBg: div.dataset.tooltipBg || null
                                 }}
                             />
                         </SessionProvider>

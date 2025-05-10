@@ -71,7 +71,19 @@ function Content({ children, border, color = conversuColors.orange }: Props) {
     return (
         <Box w='100%' h='100%'>
             <SlideFade in={isExpanded} offsetY='1rem'>
-                <Flex w='100%' h='100%' flexDir='row' align='center' justify='flex-end'>
+                <Flex
+                    w='100%'
+                    h='100%'
+                    flexDir='row'
+                    align='center'
+                    justify={{
+                        base: 'center',
+                        sm: 'center',
+                        md: 'flex-end',
+                        lg: 'flex-end',
+                        xl: 'flex-end'
+                    }}
+                >
                     {allowExpand && (
                         <ExpandButton color={color} />
                     )}

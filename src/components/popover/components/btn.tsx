@@ -1,9 +1,7 @@
-import { Box, Button, Center, Flex, Icon, IconButton, Img, Text } from "@chakra-ui/react";
+import { Button, Center, Flex, Icon, IconButton, Img, Text } from "@chakra-ui/react";
 import { FiSmile, FiX } from "react-icons/fi";
 import { conversuColors } from "../../../theme/theme.global";
 import { usePlugin } from "../../../services/plugin/hook";
-import React from "react";
-import { generateKey } from "../../../utils/utils";
 import { RiArrowDownDoubleLine } from "react-icons/ri";
 import { TbMessageCircleFilled } from "react-icons/tb";
 
@@ -14,10 +12,12 @@ interface Props {
     type?: 'circle' | 'badge';
     color?: string;
     icon?: string;
-    tooltip?: string;
     size?: number;
     allowTooltip?: boolean;
     title?: string;
+    tooltip?: string | null;
+    tooltipColor?: string | null;
+    tooltipBg?: string | null;
 }
 
 export default function PopoverButton({
@@ -25,9 +25,12 @@ export default function PopoverButton({
     type = 'circle',
     icon,
     tooltip,
+    tooltipBg,
+    tooltipColor,
     allowTooltip = true,
     size = 64,
-    title
+    title,
+
 }: Props) {
 
     const {
@@ -46,6 +49,7 @@ export default function PopoverButton({
 
     return (
         <Flex
+            id='cp-popover-btn'
             w='100%'
             flexDir='column'
             gap='1rem'
@@ -53,7 +57,8 @@ export default function PopoverButton({
         >
             {allowTooltip && showTooltip && (
                 <Flex
-                    w={`${popover.width}px`}
+                    id='cp-btn-tooltip'
+                    w={`${popover.width - 24}px`}
                     pl='1rem'
                     py='1rem'
                     flexDir='row'
@@ -61,13 +66,13 @@ export default function PopoverButton({
                     justify='space-between'
                     borderRadius={borderRadius}
                     boxShadow='lg'
-                    bg={!tooltip ? bot.layout.bot.bg : tooltip}
-                    color={!tooltip ? bot.layout.bot.color : 'gray.800'}
+                    bg={tooltipBg || bot.layout.bot.bg}
+                    color={tooltipColor || bot.layout.bot.color}
                     gap='.5rem'
-                    mr={`${Math.floor(buttonSize / 2)}px`}
+                    mr='8px'
                 >
-                    <Text as='span' w='100%' textAlign='left'>
-                        {bot?.tooltip?.split('\n').map(i => <React.Fragment key={generateKey()}>{i}<br /></React.Fragment>)}
+                    <Text as='span' w='100%' maxW='200px' textAlign='left'>
+                        {bot?.tooltip || tooltip || ''}
                     </Text>
                     {!isExpanded && (
                         <Flex w='1.5rem' h='100%' flexDir='column' justify='flex-start' align='flex-end' mt='-1rem'>
@@ -81,7 +86,7 @@ export default function PopoverButton({
                                 isRound
                                 fontSize='1rem'
                                 size='sm'
-                                color={bot.layout.bot.color ?? 'gray.800'}
+                                color={tooltipColor || bot.layout.bot.color || 'gray.800'}
                                 colorScheme='whiteAlpha'
                                 bg='transparent'
                                 _hover={{
@@ -95,6 +100,7 @@ export default function PopoverButton({
             )}
             {!isExpanded && (
                 <Button
+                    id='cp-open-btn'
                     aria-label="Abrir chat"
                     rounded={type === 'circle' ? 'full' : undefined}
                     w={type === 'badge' ? undefined : `${buttonSize}px`}
@@ -145,6 +151,7 @@ export default function PopoverButton({
             )}
             {isExpanded && (
                 <Button
+                    id='cp-minimize-btn'
                     onClick={onToggle}
                     variant='unstyled'
                     bg={color}

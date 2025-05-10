@@ -17,13 +17,15 @@ interface Props {
     color?: string;
     icon?: string;
     title?: string;
+    tooltip?: string | null;
+    tooltipColor?: string | null;
+    tooltipBg?: string | null;
   }
 }
 
 function App({
   allowDarkTheme = false,
   border,
-  tooltipColor,
   zIndex = 9998,
   username = null,
   name = null,
@@ -58,7 +60,7 @@ function App({
           </Plugin.Popover.Content>
           <Plugin.Popover.Button
             size={buttonSize}
-            tooltip={tooltipColor}
+            allowTooltip={!!btn.tooltip || !!bot.tooltip}
             {...btn}
           />
         </Plugin.Popover.Container>
