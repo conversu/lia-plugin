@@ -9,7 +9,7 @@ import { TbMessageCircleFilled } from "react-icons/tb";
 
 
 interface Props {
-    type?: 'circle' | 'badge';
+    type?: 'circle' | 'badge' | 'ghost';
     color?: string;
     icon?: string;
     size?: number;
@@ -46,6 +46,7 @@ export default function PopoverButton({
     } = usePlugin();
 
     const buttonSize = size * (isExpanded ? 0.6 : 1) * (isShortVersion ? 0.8 : 1)
+    const isCircleOrBadge = type === 'badge' || type === 'circle';
 
     return (
         <Flex
@@ -110,13 +111,13 @@ export default function PopoverButton({
                     color='white'
                     cursor='pointer'
                     colorScheme='gray'
-                    bg={color}
+                    bg={isCircleOrBadge ? color : 'transparent'}
                     _hover={{
-                        bg: color,
+                        bg: isCircleOrBadge ? color : 'transparent',
                         color: 'white'
                     }}
                     p='.5rem'
-                    boxShadow='2xl'
+                    boxShadow={isCircleOrBadge ? color : 'transparent'}
                     leftIcon={type === 'badge' ? <Icon as={TbMessageCircleFilled} /> : undefined}
                 >
                     {type === 'badge' ? (
@@ -126,15 +127,15 @@ export default function PopoverButton({
                             <Center
                                 w='100%'
                                 h='100%'
-                                maxW='2rem'
-                                maxH='2rem'
+                                maxW={isCircleOrBadge ? `${buttonSize}px` : '2rem'}
+                                maxH={isCircleOrBadge ? `${buttonSize}px` : '2rem'}
                             >
                                 {
                                     !!icon ? (
                                         <Img
                                             w='100%'
                                             h='100%'
-                                            rounded='full'
+                                            rounded={isCircleOrBadge ? 'full' : undefined}
                                             src={icon}
                                         />
                                     ) : (
