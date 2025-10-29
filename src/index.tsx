@@ -31,7 +31,7 @@ root.render(
                     displayError={div.dataset.showOnError?.toLowerCase() === "true"}
                     dataSet={div.dataset}
                     position={div.dataset.position ? div.dataset.position as PluginPosition : undefined}
-                    buttonSize={div.dataset.buttonSize ? Number(div.dataset.buttonSize) : undefined}
+                    buttonSize={div.dataset.btnSize ? Number(div.dataset.btnSize) : undefined}
                     maxHeight={div.dataset.maxHeight}
                     maxWidth={div.dataset.maxWidth}
                     height={div.dataset.height}
@@ -41,6 +41,7 @@ root.render(
                     mode={div.dataset.mode ? PluginMode[div.dataset.mode?.toUpperCase() as keyof typeof PluginMode] || PluginMode.POPOVER : PluginMode.POPOVER}
                     allowExpand={div.dataset.allowExpand === 'true'}
                     btnType={!!div.dataset.btnType ? div.dataset.btnType.toLowerCase() as 'circle' | 'badge' : 'circle'}
+                    tooltip={div.dataset.tooltip}
                 >
                     <ThemeProvider
                         allowDarkTheme={div.dataset.allowDarkTheme?.toLowerCase() === "true"}
@@ -60,7 +61,11 @@ root.render(
                                     title: div.dataset.btnTitle,
                                     tooltip: div.dataset.tooltip || null,
                                     tooltipColor: div.dataset.tooltipColor || null,
-                                    tooltipBg: div.dataset.tooltipBg || null
+                                    tooltipBg: div.dataset.tooltipBg || null,
+                                    img: div.dataset.iconHeight && div.dataset.iconWidth && div.dataset.btnIcon ? {
+                                        height: div.dataset.iconHeight,
+                                        width: div.dataset.iconWidth
+                                    } : undefined
                                 }}
                             />
                         </SessionProvider>

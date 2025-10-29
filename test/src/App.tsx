@@ -68,7 +68,7 @@ function App() {
             color: 'black'
           }}
         >
-          <div
+          {/* <div
             id="conversu-plugin"
             data-token="B-PLUG-D3E4ED1E-9EC8-4BB6-8A9A-C7BE837C6A0E"
             data-mode="COMPONENT"
@@ -77,7 +77,7 @@ function App() {
             data-username='teste.signu15@email.com'
             data-name='Novo Teste'
             data-allow-toggle="false"
-          />
+          /> */}
 
         </main>
       </div>

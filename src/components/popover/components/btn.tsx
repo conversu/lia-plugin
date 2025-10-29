@@ -1,4 +1,4 @@
-import { Button, Center, Flex, Icon, IconButton, Img, Text } from "@chakra-ui/react";
+import { Button, ButtonProps, Center, CenterProps, Flex, Icon, IconButton, Img, ImgProps, Text } from "@chakra-ui/react";
 import { FiSmile, FiX } from "react-icons/fi";
 import { conversuColors } from "../../../theme/theme.global";
 import { usePlugin } from "../../../services/plugin/hook";
@@ -18,6 +18,10 @@ interface Props {
     tooltip?: string | null;
     tooltipColor?: string | null;
     tooltipBg?: string | null;
+    img?: {
+        width: string;
+        height: string;
+    }
 }
 
 export default function PopoverButton({
@@ -30,7 +34,7 @@ export default function PopoverButton({
     allowTooltip = true,
     size = 64,
     title,
-
+    img
 }: Props) {
 
     const {
@@ -46,7 +50,72 @@ export default function PopoverButton({
     } = usePlugin();
 
     const buttonSize = size * (isExpanded ? 0.6 : 1) * (isShortVersion ? 0.8 : 1)
-    const isCircleOrBadge = type === 'badge' || type === 'circle';
+
+    const style: Record<'badge' | 'circle' | 'ghost', ButtonProps> = {
+        'badge': {
+            w: undefined,
+            h: '2rem',
+            borderRadius: '8px 8px 0px 0px',
+            leftIcon: <Icon as={TbMessageCircleFilled} />,
+            bg: color,
+            boxShadow: color === 'transparent' ? undefined : 'lg',
+            _hover: {
+                bg: color,
+                color: 'white'
+            },
+            rounded: undefined,
+            p: '.5rem',
+        },
+        'circle': {
+            w: `${buttonSize}px`,
+            h: `${buttonSize}px`,
+            bg: color,
+            boxShadow: color === 'transparent' ? undefined : 'lg',
+            _hover: {
+                bg: color,
+                color: 'white'
+            },
+            rounded: 'full',
+            p: '.5rem'
+        },
+        'ghost': {
+            bg: 'transparent',
+            p: '0.25rem',
+            _hover: {
+                bg: 'transparent',
+                color: 'transparent'
+            },
+            variant: 'ghost',
+            mb: '1rem'
+        }
+    }
+
+
+    const centerProps: Record<'badge' | 'circle' | 'ghost', CenterProps> = {
+        'badge': {},
+        'circle': {
+            maxW: `${buttonSize}px`,
+            maxH: `${buttonSize}px`
+        },
+        'ghost': {
+            mb: '1rem',
+        }
+    }
+
+    const imgProps: Record<'badge' | 'circle' | 'ghost', ImgProps> = {
+        'badge': {
+
+        },
+        'circle': {
+            rounded: 'full',
+            minW: 32,
+            minH: 32
+        },
+        'ghost': {
+            minW: img?.width,
+            minH: img?.height
+        }
+    }
 
     return (
         <Flex
@@ -59,7 +128,7 @@ export default function PopoverButton({
             {allowTooltip && showTooltip && (
                 <Flex
                     id='cp-btn-tooltip'
-                    w={`${popover.width - 24}px`}
+                    w='350px'
                     pl='1rem'
                     py='1rem'
                     flexDir='row'
@@ -70,9 +139,10 @@ export default function PopoverButton({
                     bg={tooltipBg || bot.layout.bot.bg}
                     color={tooltipColor || bot.layout.bot.color}
                     gap='.5rem'
-                    mr='8px'
+                    mr={type === 'ghost' ? img?.width ? Math.floor(Number(img.width) / 2) : '32px' : '8px'}
+                    mb={type === 'ghost' ? img?.height ? `${Number(img.height) * 1.75}px` : '32px' : undefined}
                 >
-                    <Text as='span' w='100%' maxW='200px' textAlign='left'>
+                    <Text as='span' w='100%' maxW='250px' textAlign='left'>
                         {bot?.tooltip || tooltip || ''}
                     </Text>
                     {!isExpanded && (
@@ -103,22 +173,11 @@ export default function PopoverButton({
                 <Button
                     id='cp-open-btn'
                     aria-label="Abrir chat"
-                    rounded={type === 'circle' ? 'full' : undefined}
-                    w={type === 'badge' ? undefined : `${buttonSize}px`}
-                    h={type === 'badge' ? '2rem' : `${buttonSize}px`}
-                    borderRadius={type === 'badge' ? '8px 8px 0px 0px' : undefined}
                     onClick={onToggle}
                     color='white'
                     cursor='pointer'
                     colorScheme='gray'
-                    bg={isCircleOrBadge ? color : 'transparent'}
-                    _hover={{
-                        bg: isCircleOrBadge ? color : 'transparent',
-                        color: 'white'
-                    }}
-                    p='.5rem'
-                    boxShadow={isCircleOrBadge ? color : 'transparent'}
-                    leftIcon={type === 'badge' ? <Icon as={TbMessageCircleFilled} /> : undefined}
+                    {...style[type]}
                 >
                     {type === 'badge' ? (
                         <>{title}</>
@@ -127,16 +186,15 @@ export default function PopoverButton({
                             <Center
                                 w='100%'
                                 h='100%'
-                                maxW={isCircleOrBadge ? `${buttonSize}px` : '2rem'}
-                                maxH={isCircleOrBadge ? `${buttonSize}px` : '2rem'}
+                                {...centerProps[type]}
                             >
                                 {
                                     !!icon ? (
                                         <Img
                                             w='100%'
                                             h='100%'
-                                            rounded={isCircleOrBadge ? 'full' : undefined}
                                             src={icon}
+                                            {...imgProps[type]}
                                         />
                                     ) : (
                                         <Icon
@@ -155,14 +213,14 @@ export default function PopoverButton({
                     id='cp-minimize-btn'
                     onClick={onToggle}
                     variant='unstyled'
-                    bg={color}
+                    bg={color === 'transparent' ? '#000' : color}
                     w='125px'
                     borderRadius='0px 0px 8px 8px'
                     boxShadow='md'
                     color='white'
                     _hover={{
                         color: 'white',
-                        bg: color,
+                        bg: color === 'transparent' ? '#000' : color,
                         filter: 'brightness(0.98)',
                     }}
                     border='none'

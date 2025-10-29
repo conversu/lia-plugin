@@ -20,6 +20,10 @@ interface Props {
     tooltip?: string | null;
     tooltipColor?: string | null;
     tooltipBg?: string | null;
+    img?: {
+      height: string;
+      width: string;
+    }
   }
 }
 

@@ -27,7 +27,8 @@ interface Props {
     endHour?: string | null;
     mode?: PluginMode;
     allowExpand?: boolean;
-    btnType?: 'circle' | 'badge';
+    btnType?: 'circle' | 'badge' | 'ghost';
+    tooltip?: string | null;
 }
 
 
@@ -46,7 +47,8 @@ export function PluginProvider({
     endHour = null,
     mode = PluginMode.POPOVER,
     allowExpand = true,
-    btnType = 'circle'
+    btnType = 'circle',
+    tooltip = null
 }: Props) {
 
 
@@ -71,7 +73,7 @@ export function PluginProvider({
 
     const isShortVersion = window.innerWidth <= 400;
 
-    const yAxisPosition = btnType === 'badge' ? '0' : '2';
+    const yAxisPosition = ['badge'].includes(btnType) ? '0' : '2';
     const xAxisPosition = isShortVersion ? isExpanded ? isMaximized ? '1' : '0' : '1' : '2';
 
 
@@ -187,7 +189,7 @@ export function PluginProvider({
 
             return 720;
         }
- 
+
         return window.innerHeight - padding
     }
 
@@ -222,7 +224,7 @@ export function PluginProvider({
                 borderRadius: isShortVersion ? '0.75rem' : (borderRadius[position] ?? borderRadius['bottom-right']),
                 buttonSize,
                 isShortVersion,
-                showTooltip: !!bot?.tooltip && isTooltipOpen && !isExpanded,
+                showTooltip: !!(bot?.tooltip || tooltip) && isTooltipOpen && !isExpanded,
                 isExpanded,
                 onClose: () => setIsExpanded(false),
                 onOpen: () => setIsExpanded(true),
