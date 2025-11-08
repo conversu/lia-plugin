@@ -6,6 +6,7 @@ import { BoxProps, FlexProps } from "@chakra-ui/react";
 export interface IPluginContext {
     bot: IBot;
     url: string;
+    notification: string | null;
     requester?: string | null;
     contentPositionProps: Partial<FlexProps>;
     containerPositionProps: Partial<BoxProps>;
@@ -32,6 +33,8 @@ export interface IPluginContext {
     isMaximized: boolean;
     onMaximizeToggle: () => void;
     allowExpand: boolean;
+    tooltipMessage: (v: string) => void;
+    tooltip: string;
 }
 
 

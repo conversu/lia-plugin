@@ -13,7 +13,8 @@ export enum MessageEventType {
     OPENED = 'OPENED',
     CLOSED = 'CLOSED',
     POPOVER_CLOSE = 'POPOVER_CLOSE',
-    POPOVER_EXPAND = 'POPOVER_EXPAND'
+    POPOVER_EXPAND = 'POPOVER_EXPAND',
+    NOTIFY = 'NOTIFY'
 }
 
 

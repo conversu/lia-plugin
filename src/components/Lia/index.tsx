@@ -35,8 +35,6 @@ export function Lia({ allowDarkTheme, bot, src, username, name }: Props) {
 	};
 
 
-	useEffect(() => { }, [isMaximized])
-
 	useEffect(() => {
 
 		window.addEventListener('message', listener);
@@ -45,6 +43,10 @@ export function Lia({ allowDarkTheme, bot, src, username, name }: Props) {
 			window.removeEventListener('message', listener);
 		};
 	}, [bot.alias, src]);
+
+
+
+	useEffect(() => { }, [isMaximized])
 
 	useEffect(() => {
 		const iframe = document.getElementById(bot.uuid);

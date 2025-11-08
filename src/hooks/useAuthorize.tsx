@@ -48,6 +48,7 @@ export const useAuthorize = (params: {
 
   const bot = useRef<IBot | null>(null);
   const url = useRef<string | null>(null);
+  const notification = useRef<string | null>(null);
   const error = useRef<string | null>(null);
 
   const [status, setStatus] = useState<'loading' | 'error' | 'authorized' | 'disabled'>('loading');
@@ -101,6 +102,7 @@ export const useAuthorize = (params: {
             colors: JSON.parse(data.bot.layout.colors),
           },
         };
+        notification.current = data.notificationEndpoint;
         url.current = data.liaEndpoint;
         setStatus('authorized');
       },
@@ -171,6 +173,7 @@ export const useAuthorize = (params: {
     error: error.current,
     bot: bot.current,
     url: url.current,
+    notification: notification.current,
     refetch,
   };
 };

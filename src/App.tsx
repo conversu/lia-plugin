@@ -37,38 +37,50 @@ function App({
   btn
 }: Props) {
 
-  const { bot, url, buttonSize, mode, component } = usePlugin();
+  const { bot, url, buttonSize, mode, component, notification } = usePlugin();
 
 
   if (mode === PluginMode.POPOVER) {
     return (
-      <Plugin.Container
-        props={{
-          zIndex
-        }}
-      >
-        <Plugin.Popover.Container
-          buttonSize={buttonSize}
+      <>
+        <Plugin.Container
+          props={{
+            zIndex
+          }}
         >
-          <Plugin.Popover.Content
-            border={border}
-            color={btn.color}
+          <Plugin.Popover.Container
+            buttonSize={buttonSize}
           >
-            <Lia
-              allowDarkTheme={allowDarkTheme}
-              bot={bot}
-              src={url}
-              username={username}
-              name={name}
+            <Plugin.Popover.Content
+              border={border}
+              color={btn.color}
+            >
+              <Lia
+                allowDarkTheme={allowDarkTheme}
+                bot={bot}
+                src={url}
+                username={username}
+                name={name}
+              />
+            </Plugin.Popover.Content>
+            <Plugin.Popover.Button
+              size={buttonSize}
+              {...btn}
             />
-          </Plugin.Popover.Content>
-          <Plugin.Popover.Button
-            size={buttonSize}
-            allowTooltip={!!btn.tooltip || !!bot.tooltip}
-            {...btn}
+          </Plugin.Popover.Container>
+
+        </Plugin.Container>
+        {!!notification && (
+          <iframe
+            style={{
+              display: 'none'
+            }}
+            title='conversu-notification'
+            id='conversu-notification'
+            src={`${notification}?origin=${btoa(window.location.href)}`}
           />
-        </Plugin.Popover.Container>
-      </Plugin.Container>
+        )}
+      </>
     );
   }
 

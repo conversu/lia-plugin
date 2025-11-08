@@ -1,9 +1,10 @@
-import { Button, ButtonProps, Center, CenterProps, Flex, Icon, IconButton, Img, ImgProps, Text } from "@chakra-ui/react";
+import { Box, Button, ButtonProps, Center, CenterProps, Flex, Icon, IconButton, Img, ImgProps, Text } from "@chakra-ui/react";
 import { FiSmile, FiX } from "react-icons/fi";
 import { conversuColors } from "../../../theme/theme.global";
 import { usePlugin } from "../../../services/plugin/hook";
 import { RiArrowDownDoubleLine } from "react-icons/ri";
 import { TbMessageCircleFilled } from "react-icons/tb";
+import MarkdownRenderer from "../../Markdown";
 
 
 
@@ -28,7 +29,6 @@ export default function PopoverButton({
     color = conversuColors.orange,
     type = 'circle',
     icon,
-    tooltip,
     tooltipBg,
     tooltipColor,
     allowTooltip = true,
@@ -42,11 +42,11 @@ export default function PopoverButton({
         onToggle,
         isShortVersion,
         contentPositionProps,
-        popover,
         borderRadius,
         bot,
         showTooltip,
         onTooltipClose,
+        tooltip
     } = usePlugin();
 
     const buttonSize = size * (isExpanded ? 0.6 : 1) * (isShortVersion ? 0.8 : 1)
@@ -117,6 +117,8 @@ export default function PopoverButton({
         }
     }
 
+
+
     return (
         <Flex
             id='cp-popover-btn'
@@ -142,9 +144,13 @@ export default function PopoverButton({
                     mr={type === 'ghost' ? img?.width ? Math.floor(Number(img.width) / 2) : '32px' : '8px'}
                     mb={type === 'ghost' ? img?.height ? `${Number(img.height) * 1.75}px` : '32px' : undefined}
                 >
-                    <Text as='span' w='100%' maxW='250px' textAlign='left'>
-                        {bot?.tooltip || tooltip || ''}
-                    </Text>
+                    <Box w='100%' maxW='250px'>
+                        {tooltip && tooltip.length > 0 && (
+                            <MarkdownRenderer
+                                content={tooltip}
+                            />
+                        )}
+                    </Box>
                     {!isExpanded && (
                         <Flex w='1.5rem' h='100%' flexDir='column' justify='flex-start' align='flex-end' mt='-1rem'>
                             <IconButton

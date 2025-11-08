@@ -1,0 +1,198 @@
+.markdown-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1rem;
+  font-family: Sora, sans-serif;
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+.markdown-content h1,
+h2,
+h3 {
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  font-family: Sora, sans-serif;
+}
+
+.markdown-content strong {
+  margin-left: 4px;
+  margin-right: 4px;
+  font-weight: bold;
+  font-family: Sora, sans-serif;
+}
+
+div h2:nth-child(n + 2) {
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  margin-top: 2rem;
+  font-family: Sora, sans-serif;
+}
+
+div h3:nth-child(n + 2) {
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  margin-top: 2rem;
+  font-family: Sora, sans-serif;
+}
+
+div h1:nth-child(n + 2) {
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  margin-top: 2rem;
+  font-family: Sora, sans-serif;
+}
+
+.markdown-content h4,
+h5,
+h6,
+h7 {
+  width: 100%;
+  text-align: left;
+  font-weight: medium;
+  font-family: Sora, sans-serif;
+}
+
+.markdown-content img {
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--chakra-colors-gray-300);
+}
+
+.markdown-content ul {
+  list-style-type: circle;
+  padding-left: 0.25rem;
+  font-family: Sora, sans-serif;
+}
+
+.markdown-content li {
+  list-style-type: none; /* Remove default bullet */
+  position: relative;
+  padding-bottom: 0.25rem;
+  font-family: Sora, sans-serif;
+}
+
+.markdown-content li::before {
+  content: none; /* Custom bullet */
+  position: absolute;
+  left: 0;
+}
+
+.markdown-content p {
+  line-height: 150%;
+  font-family: Sora, sans-serif;
+}
+
+.markdown-content a {
+  text-decoration: underline;
+  font-family: Sora, sans-serif;
+}
+
+.markdown-content a:hover {
+  color: var(--chakra-colors-app-secondary);
+  cursor: pointer;
+  font-family: Sora, sans-serif;
+}
+
+.markdown-event {
+  width: 100%;
+  max-width: 920px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  font-family: Sora, sans-serif;
+}
+
+.markdown-event h1,
+h2,
+h3 {
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+}
+
+.markdown-event strong {
+  margin-left: 4px;
+  margin-right: 4px;
+  font-weight: bold;
+}
+
+div h2:nth-child(n + 2) {
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  margin-top: 2rem;
+}
+
+div h3:nth-child(n + 2) {
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  margin-top: 2rem;
+}
+
+div h1:nth-child(n + 2) {
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  margin-top: 2rem;
+}
+
+.markdown-event h4,
+h5,
+h6,
+h7 {
+  width: 100%;
+  text-align: left;
+  font-weight: medium;
+}
+
+.markdown-event img {
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--chakra-colors-gray-300);
+}
+
+.markdown-event ul {
+  list-style-type: circle;
+  padding-left: 0.25rem;
+}
+
+.markdown-event li {
+  list-style-type: square; /* Remove default bullet */
+  position: relative;
+  padding-bottom: 0.25rem;
+  margin-left: 1.5rem;
+}
+
+.markdown-event li::before {
+  content: none; /* Custom bullet */
+  position: absolute;
+  left: 0;
+}
+
+.markdown-event p {
+  line-height: 150%;
+}
+
+.markdown-event a {
+  text-decoration: underline;
+}
+
+.markdown-event a:hover {
+  color: var(--chakra-colors-app-secondary);
+  cursor: pointer;
+}

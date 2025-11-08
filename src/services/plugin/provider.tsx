@@ -10,6 +10,7 @@ import { Error } from "../../components/Error";
 import { PluginPosition } from "../../@types/plugin";
 import { useAuthorize } from "../../hooks/useAuthorize";
 import { PluginMode } from "./types";
+import { useRemoteSoundNotification } from "../../hooks/useNotificationSound";
 
 
 interface Props {
@@ -54,10 +55,14 @@ export function PluginProvider({
 
     const [isExpanded, setIsExpanded] = useState(false);
 
-    const { isOpen: isTooltipOpen, onClose: onTooltipClose, onOpen: onTooltipOpen } = useDisclosure();
+    const { isOpen: isTooltipOpen, onClose, onOpen: onTooltipOpen } = useDisclosure();
     const { isOpen: isMaximized, onToggle: onMaximizeToggle, onClose: onMinimize } = useDisclosure();
 
-    const { bot, error, status, url, refetch } = useAuthorize({
+    const { playSound, prefetch} = useRemoteSoundNotification();
+
+    const [notifyTooltip, setNotifyTooltip] = useState<string | null>(null);
+
+    const { bot, error, status, url, refetch, notification } = useAuthorize({
         dataSet,
         token,
         defaultStartHour: startHour,
@@ -67,6 +72,7 @@ export function PluginProvider({
 
     useEffect(() => {
         refetch();
+        prefetch();
         onMinimize();
     }, []);
 
@@ -76,6 +82,15 @@ export function PluginProvider({
     const yAxisPosition = ['badge'].includes(btnType) ? '0' : '2';
     const xAxisPosition = isShortVersion ? isExpanded ? isMaximized ? '1' : '0' : '1' : '2';
 
+    function tooltipMessage(v: string) {
+        setNotifyTooltip(v);
+        onTooltipOpen()
+    }
+
+    function onTooltipClose() {
+        onClose();
+        setNotifyTooltip(null);
+    }
 
     const containerPositionProps = {
         'bottom-left': {
@@ -125,6 +140,27 @@ export function PluginProvider({
         'top-right': '0.75rem 0 0.75rem 0.75rem',
         'top-left': '0 0.75rem 0.75rem 0.75rem'
     }
+
+    const listener = (event: MessageEvent) => {
+        if (!notification || !notification.startsWith(event.origin)) return;
+
+        const data = JSON.parse(event.data);
+
+        if (data.event === 'NOTIFY') {
+            playSound();
+            tooltipMessage(data.title)
+        }
+    }
+
+    useEffect(() => {
+
+        window.addEventListener('message', listener);
+
+        return () => {
+            window.removeEventListener('message', listener);
+        };
+    }, [notification]);
+
 
     function getWidth() {
 
@@ -219,12 +255,14 @@ export function PluginProvider({
                 url: url as string,
                 bot: bot as IBot,
                 requester: null,
+                notification: notification || null,
                 containerPositionProps: containerPositionProps[position] ?? containerPositionProps['bottom-right'],
                 contentPositionProps: contentPositionProps[position] ?? contentPositionProps['bottom-right'],
                 borderRadius: isShortVersion ? '0.75rem' : (borderRadius[position] ?? borderRadius['bottom-right']),
                 buttonSize,
                 isShortVersion,
-                showTooltip: !!(bot?.tooltip || tooltip) && isTooltipOpen && !isExpanded,
+                showTooltip: !!(notifyTooltip || bot?.tooltip || tooltip) && isTooltipOpen && !isExpanded,
+                tooltip: notifyTooltip || bot?.tooltip || tooltip || '',
                 isExpanded,
                 onClose: () => setIsExpanded(false),
                 onOpen: () => setIsExpanded(true),
@@ -243,7 +281,8 @@ export function PluginProvider({
                 mode,
                 isMaximized: isMaximized && allowExpand,
                 onMaximizeToggle,
-                allowExpand
+                allowExpand,
+                tooltipMessage
             }}
             >
                 {children}

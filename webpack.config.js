@@ -8,8 +8,8 @@ module.exports = (env) => {
         entry: './src/index.tsx',
         output: {
             path: path.join(__dirname, 'dist'),
-            filename:  env.production ? `conversu.js` : `conversu.${env.env}.js`,
-            assetModuleFilename: "[name].[ext]"
+            filename: env.production ? `conversu.js` : `conversu.${env.env}.js`,
+            assetModuleFilename: "assets/[name].[ext]"
         },
         devtool: 'inline-source-map',
         module: {
@@ -23,6 +23,14 @@ module.exports = (env) => {
                     loader: "file-loader",
                     options: {
                         limit: 10000,
+                        name: "assets/[name].[ext]"
+                    },
+                },
+                {
+                    // novo: sons
+                    test: /\.(mp3|wav|ogg)$/i,
+                    loader: "file-loader",
+                    options: {
                         name: "assets/[name].[ext]"
                     },
                 },
