@@ -35,7 +35,11 @@ export function ThemeProvider({
     });
 
     return (
-        <ChakraProvider theme={chakraTheme as Record<string, unknown>}>
+        <ChakraProvider
+            theme={chakraTheme as Record<string, unknown>}
+            disableGlobalStyle
+            resetCSS={false}
+        >
             <ThemeContext.Provider value={{
                 bg: 'transparent',
                 color: 'white',
