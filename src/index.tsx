@@ -47,7 +47,15 @@ root.render(
                         defaultTheme={({
                             'dark': 'dark',
                             'light': 'light'
-                        }[div.dataset.theme ?? 'light'] ?? 'light') as 'dark' | 'light'}
+                        }[div?.dataset?.theme ?? 'light'] ?? 'light') as 'dark' | 'light'}
+                        globalCss={({
+                            'allowed': 'allowed',
+                            'blocked': 'blocked'
+                        }[div.dataset.globalCss ?? 'allowed']) as 'allowed' | 'blocked'}
+                        resetCss={({
+                            'true': 'true',
+                            'false': 'false'
+                        }[div.dataset.resetCss ?? 'true']) as 'true' | 'false'}
                     >
                         <SessionProvider>
                             <App

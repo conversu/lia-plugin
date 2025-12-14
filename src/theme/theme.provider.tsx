@@ -13,13 +13,17 @@ import { usePlugin } from "../services/plugin/hook";
 interface ThemeProviderProps {
     children: ReactNode;
     defaultTheme?: 'dark' | 'light';
+    globalCss?: 'allowed' | 'blocked';
+    resetCss?: 'true' | 'false';
 }
 
 
 
 export function ThemeProvider({
     children,
-    defaultTheme = 'light'
+    defaultTheme = 'light',
+    globalCss = 'allowed',
+    resetCss = 'true'
 }: ThemeProviderProps) {
 
     const { bot } = usePlugin();
@@ -37,8 +41,8 @@ export function ThemeProvider({
     return (
         <ChakraProvider
             theme={chakraTheme as Record<string, unknown>}
-            disableGlobalStyle
-            resetCSS={false}
+            disableGlobalStyle={globalCss === 'blocked'}
+            resetCSS={resetCss === 'true'}
         >
             <ThemeContext.Provider value={{
                 bg: 'transparent',
