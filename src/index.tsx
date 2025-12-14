@@ -44,7 +44,10 @@ root.render(
                     tooltip={div.dataset.tooltip}
                 >
                     <ThemeProvider
-                        allowDarkTheme={div.dataset.allowDarkTheme?.toLowerCase() === "true"}
+                        defaultTheme={({
+                            'dark': 'dark',
+                            'light': 'light'
+                        }[div.dataset.theme ?? 'light'] ?? 'light') as 'dark' | 'light'}
                     >
                         <SessionProvider>
                             <App

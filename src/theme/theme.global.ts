@@ -1,6 +1,4 @@
-import { TextProps } from '@chakra-ui/react';
 import { IBotLayoutProps } from './theme.types';
-import { isMobileDevice } from '../utils/utils';
 
 
 const breakpoints = {
@@ -14,47 +12,6 @@ const breakpoints = {
 
 export const maxWidth = '1280px'
 
-export const fontsStyles = {
-    h1: {
-        fontWeight: 'normal',
-        textAlign: 'center',
-        lineHeight: '120%',
-        fontSize: '1rem',
-    } as TextProps,
-    h2: {
-        fontWeight: 'normal',
-        textAlign: 'center',
-        lineHeight: '110%',
-        fontSize: '1rem',
-    } as TextProps,
-    h3: {
-        fontWeight: 'normal',
-        textAlign: 'center',
-        lineHeight: '110%',
-        fontSize: '1rem',
-    } as TextProps,
-    h4: {
-        fontWeight: 'normal',
-        textAlign: 'center',
-        lineHeight: '110%',
-        fontSize: '1rem',
-    } as TextProps,
-    h5: {
-        fontWeight: 'light',
-        textAlign: 'center',
-        maxW: maxWidth,
-        fontSize: '1rem',
-    } as TextProps,
-    p: {
-        fontWeight: 'light',
-        textAlign: 'left',
-        lineHeight: '110%',
-        fontSize: '1rem',
-    } as TextProps,
-    span: {
-        fontWeight: 'normal'
-    } as TextProps,
-}
 
 export const grayScale = {
     "900": "#181b23",
@@ -71,15 +28,7 @@ export const grayScale = {
     "25": "#fafafa"
 }
 
-const components = {
-    a: {
-        'text-decoration': 'none'
-    },
-    img: {
-        'pointer-events': 'none',
-        'user-select': 'none'
-    }
-}
+
 
 export const global = {
     width: 'calc(var(--vw, 1vw) * 100)',
@@ -99,7 +48,6 @@ export const global = {
         xl: 'hidden'
     },
     overflowX: 'hidden',
-    ...fontsStyles,
 }
 
 export const conversuColors = {
@@ -115,114 +63,6 @@ export const sidebarStyle = {
     hoverColor: conversuColors.orange,
 }
 
-export const inputGlobalProps = {
-    base: {
-        errorBorderColor: 'red.500',
-        variant: 'outline',
-        rounded: 'md',
-        p: '2',
-        size: 'md',
-        fontSize: {
-            base: '0.875rem',
-            sm: '0.875rem',
-            md: '1rem',
-            lg: '1rem',
-            xl: '1rem'
-        },
-    },
-    dark: {
-        bgColor: 'transparent',
-        borderColor: 'white',
-        color: 'white',
-        _focus: {
-            color: conversuColors.orange
-        },
-        focusBorderColor: conversuColors.orange,
-        _hover: {
-            borderColor: conversuColors.orange
-        },
-        _disabled: {
-            bgColor: 'transparent',
-            borderColor: 'gray.200',
-            color: 'gray.200',
-            cursor: 'not-allowed'
-        },
-        _invalid: {
-            bgColor: 'transparent',
-            color: 'red.500',
-            border: '2px solid red'
-        },
-        _placeholder: {
-            color: 'gray.100',
-            fontWeight: 'light',
-            fontSize: '1rem'
-        },
-    },
-    light: {
-        bgColor: 'white',
-        borderColor: 'gray.500',
-        color: conversuColors.purple,
-        _focus: {
-            color: conversuColors.purple
-        },
-        focusBorderColor: conversuColors.purple,
-        _hover: {
-            borderColor: conversuColors.purple
-        },
-        _disabled: {
-            bgColor: 'white',
-            borderColor: 'gray.300',
-            color: 'gray.300',
-            cursor: 'not-allowed'
-        },
-        _invalid: {
-            bgColor: 'white',
-            color: 'red.500',
-            border: '2px solid red'
-        },
-        _placeholder: {
-            color: 'gray.100',
-            fontWeight: 'light',
-            fontSize: '1rem'
-        },
-    }
-}
-
-export const scrollbarStyle = {
-    base: {
-        borderRadius: '0.25rem'
-    },
-    dark: {
-        short: {
-            width: isMobileDevice() ? '2px' : '0.6rem',
-            track: grayScale[900],
-            thumb: grayScale[700],
-            thumbHover: grayScale[500],
-        },
-        large: {
-            borderRadius: '0.25rem',
-            width: '0.6rem',
-            track: grayScale[700],
-            thumb: grayScale[800],
-            thumbHover: grayScale[900],
-        }
-    },
-    light: {
-        short: {
-            width: isMobileDevice() ? '2px' : '0.6rem',
-            track: 'white',
-            thumb: grayScale[100],
-            thumbHover: grayScale[200],
-        },
-        large: {
-            borderRadius: '0.25rem',
-            width: '0.6rem',
-            track: 'white',
-            thumb: grayScale[100],
-            thumbHover: grayScale[200],
-        }
-    }
-}
 
 
 export const themeDark = {
@@ -243,7 +83,6 @@ export const themeDark = {
         body: 'Sora, sans-serif'
     },
     breakpoints: breakpoints,
-    components: components
 };
 
 
@@ -265,7 +104,6 @@ export const themeLight = {
         body: 'Sora, sans-serif'
     },
     breakpoints: breakpoints,
-    components: components
 };
 
 export const botCTELayout: IBotLayoutProps = {
