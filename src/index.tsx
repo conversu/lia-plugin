@@ -51,11 +51,11 @@ root.render(
                         globalCss={({
                             'allowed': 'allowed',
                             'blocked': 'blocked'
-                        }[div.dataset.globalCss ?? 'allowed']) as 'allowed' | 'blocked'}
+                        }[div?.dataset?.globalCss ?? 'allowed']) as 'allowed' | 'blocked'}
                         resetCss={({
                             'true': 'true',
                             'false': 'false'
-                        }[div.dataset.resetCss ?? 'true']) as 'true' | 'false'}
+                        }[div?.dataset?.resetCss ?? 'false']) as 'true' | 'false'}
                     >
                         <SessionProvider>
                             <App

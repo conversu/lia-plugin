@@ -23,7 +23,7 @@ export function ThemeProvider({
     children,
     defaultTheme = 'light',
     globalCss = 'allowed',
-    resetCss = 'true'
+    resetCss = 'false'
 }: ThemeProviderProps) {
 
     const { bot } = usePlugin();
