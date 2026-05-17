@@ -40,7 +40,7 @@ root.render(
                     endHour={div.dataset.endHour}
                     mode={div.dataset.mode ? PluginMode[div.dataset.mode?.toUpperCase() as keyof typeof PluginMode] || PluginMode.POPOVER : PluginMode.POPOVER}
                     allowExpand={div.dataset.allowExpand === 'true'}
-                    btnType={!!div.dataset.btnType ? div.dataset.btnType.toLowerCase() as 'circle' | 'badge' : 'circle'}
+                    btnType={!!div.dataset.btnType ? div.dataset.btnType.toLowerCase() as 'circle' | 'badge' | 'ghost' : 'circle'}
                     tooltip={div.dataset.tooltip}
                 >
                     <ThemeProvider
@@ -67,7 +67,7 @@ root.render(
                                 className={div.className}
                                 btn={{
                                     icon: div.dataset.btnIcon,
-                                    type: !!div.dataset.btnType ? div.dataset.btnType.toLowerCase() as 'circle' | 'badge' : 'circle',
+                                    type: !!div.dataset.btnType ? div.dataset.btnType.toLowerCase() as 'circle' | 'badge' | 'ghost' : 'circle',
                                     color: div.dataset.color ?? div.dataset.btnColor,
                                     title: div.dataset.btnTitle,
                                     tooltip: div.dataset.tooltip || null,

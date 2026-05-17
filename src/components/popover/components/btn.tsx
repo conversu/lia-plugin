@@ -176,43 +176,129 @@ export default function PopoverButton({
                 </Flex>
             )}
             {!isExpanded && (
-                <Button
-                    id='cp-open-btn'
-                    aria-label="Abrir chat"
-                    onClick={onToggle}
-                    color='white'
-                    cursor='pointer'
-                    colorScheme='gray'
-                    {...style[type]}
-                >
-                    {type === 'badge' ? (
-                        <>{title}</>
-                    ) : (
-                        <>
-                            <Center
-                                w='100%'
-                                h='100%'
-                                {...centerProps[type]}
-                            >
-                                {
-                                    !!icon ? (
-                                        <Img
-                                            w='100%'
-                                            h='100%'
-                                            src={icon}
-                                            {...imgProps[type]}
-                                        />
-                                    ) : (
-                                        <Icon
-                                            as={isExpanded ? FiX : FiSmile}
-                                            fontSize='2rem'
-                                        />
-                                    )
-                                }
+                type === 'ghost' ? (
+                    <Box mb='1rem'>
+                        <Box
+                            as='button'
+                            id='cp-open-btn'
+                            data-btn-type='ghost'
+                            type='button'
+                            aria-label='Abrir chat'
+                            onClick={onToggle}
+                            sx={{
+                                all: 'unset',
+                                boxSizing: 'border-box',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: 'auto',
+                                height: 'auto',
+                                minWidth: 'unset',
+                                minHeight: 'unset',
+                                padding: '0',
+                                margin: '0',
+                                background: 'transparent',
+                                backgroundColor: 'transparent',
+                                border: 'none',
+                                borderWidth: '0',
+                                borderStyle: 'none',
+                                borderColor: 'transparent',
+                                borderRadius: '0',
+                                boxShadow: 'none',
+                                outline: 'none',
+                                cursor: 'pointer',
+                                appearance: 'none',
+                                WebkitAppearance: 'none',
+                                _hover: {
+                                    background: 'transparent',
+                                    backgroundColor: 'transparent',
+                                    border: 'none',
+                                    boxShadow: 'none',
+                                    outline: 'none',
+                                    transform: 'none',
+                                },
+                                _focus: {
+                                    background: 'transparent',
+                                    border: 'none',
+                                    boxShadow: 'none',
+                                    outline: 'none',
+                                },
+                                _focusVisible: {
+                                    background: 'transparent',
+                                    border: 'none',
+                                    boxShadow: 'none',
+                                    outline: 'none',
+                                },
+                                _active: {
+                                    background: 'transparent',
+                                    border: 'none',
+                                    boxShadow: 'none',
+                                    outline: 'none',
+                                    transform: 'none',
+                                },
+                            }}
+                        >
+                            <Center w='100%' h='100%'>
+                                {!!icon ? (
+                                    <Img
+                                        w='100%'
+                                        h='100%'
+                                        src={icon}
+                                        minW={img?.width}
+                                        minH={img?.height}
+                                        sx={{
+                                            display: 'block',
+                                            width: 'auto',
+                                            height: 'auto',
+                                            maxWidth: 'none',
+                                            margin: '0',
+                                            padding: '0',
+                                            background: 'transparent',
+                                            border: 'none',
+                                            boxShadow: 'none',
+                                            outline: 'none',
+                                            pointerEvents: 'none',
+                                            userSelect: 'none',
+                                        }}
+                                    />
+                                ) : (
+                                    <Icon as={FiSmile} fontSize='2rem' />
+                                )}
                             </Center>
-                        </>
-                    )}
-                </Button>
+                        </Box>
+                    </Box>
+                ) : (
+                    <Button
+                        id='cp-open-btn'
+                        data-btn-type={type}
+                        aria-label="Abrir chat"
+                        onClick={onToggle}
+                        color='white'
+                        cursor='pointer'
+                        colorScheme='gray'
+                        {...style[type]}
+                    >
+                        {type === 'badge' ? (
+                            <>{title}</>
+                        ) : (
+                            <Center w='100%' h='100%' {...centerProps[type]}>
+                                {!!icon ? (
+                                    <Img
+                                        w='100%'
+                                        h='100%'
+                                        src={icon}
+                                        {...imgProps[type]}
+                                    />
+                                ) : (
+                                    <Icon
+                                        as={isExpanded ? FiX : FiSmile}
+                                        fontSize='2rem'
+                                    />
+                                )}
+                            </Center>
+                        )}
+                    </Button>
+                )
             )}
             {isExpanded && (
                 <Button
@@ -232,6 +318,25 @@ export default function PopoverButton({
                     border='none'
                     size='xs'
                     rightIcon={<Icon as={RiArrowDownDoubleLine} />}
+                    sx={{
+                        width: '125px !important',
+                        borderRadius: '0px 0px 8px 8px !important',
+                        boxShadow: 'md !important',
+                        color: 'white !important',
+                        backgroundColor: `${color === 'transparent' ? '#000' : color} !important`,
+                        border: 'none !important',
+                        padding: '0 0.5rem !important',
+                        cursor: 'pointer !important',
+                        fontFamily: 'inherit !important',
+                        fontSize: 'inherit !important',
+                        transform: 'none !important',
+                        _hover: {
+                            color: 'white !important',
+                            backgroundColor: `${color === 'transparent' ? '#000' : color} !important`,
+                            filter: 'brightness(0.98) !important',
+                            transform: 'none !important',
+                        },
+                    }}
                 >
                     minimizar
                 </Button>

@@ -13,7 +13,7 @@ interface Props {
   name?: string | null;
   className?: string;
   btn: {
-    type?: 'circle' | 'badge';
+    type?: 'circle' | 'badge' | 'ghost';
     color?: string;
     icon?: string;
     title?: string;

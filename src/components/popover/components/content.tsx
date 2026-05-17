@@ -47,6 +47,25 @@ function ExpandButton({ color }: { color: string; }) {
                 onClick={onMaximizeToggle}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
+                sx={{
+                    width: `${isHovered ? '1.25rem' : '1rem'} !important`,
+                    height: '4rem !important',
+                    backgroundColor: `${isHovered ? color : 'var(--chakra-colors-gray-100)'} !important`,
+                    color: `${isHovered ? 'white' : 'var(--chakra-colors-gray-700)'} !important`,
+                    borderRadius: '4px !important',
+                    border: 'none !important',
+                    boxShadow: 'none !important',
+                    padding: '0 !important',
+                    fontFamily: 'inherit !important',
+                    fontSize: 'inherit !important',
+                    transform: 'none !important',
+                    cursor: 'pointer !important',
+                    _hover: {
+                        backgroundColor: `${color} !important`,
+                        color: 'white !important',
+                        transform: 'none !important',
+                    },
+                }}
             >
                 <Icon
                     as={isMaximized ? MdKeyboardArrowRight : MdKeyboardArrowLeft}

@@ -6,20 +6,51 @@
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vite + React + TS</title>
+  <!-- Simulating Elementor/WordPress global styles that bleed into all buttons -->
+  <style>
+    body {
+      background-color: #1a56db !important;
+    }
+
+    button {
+      background-color: #ff0000 !important;
+      border: 3px solid red !important;
+      border-radius: 8px !important;
+      padding: 12px 24px !important;
+      font-family: "Comic Sans MS", cursive !important;
+      color: white !important;
+      box-shadow: 0 4px 12px rgba(255, 0, 0, 0.5) !important;
+    }
+
+    button:hover {
+      background-color: #cc0000 !important;
+      border-color: #990000 !important;
+      transform: scale(1.05) !important;
+    }
+  </style>
 </head>
 
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 
-  <div 
-    id="conversu-plugin" 
-    data-token="B-PLUG-D3E4ED1E-9EC8-4BB6-8A9A-C7BE837C6A0E" 
-    data-position="bottom-right" 
+  <!-- Regular page buttons that SHOULD get the red border from global styles -->
+  <div style="position: fixed; bottom: 2rem; left: 2rem; display: flex; flex-direction: column; gap: 1rem; z-index: 100;">
+    <button>Botão normal da página</button>
+    <button>Outro botão da página</button>
+  </div>
+
+  <!-- Plugin ghost button — should NOT inherit the red border -->
+  <div
+    id="conversu-plugin"
+    data-token="B-PLUG-D3E4ED1E-9EC8-4BB6-8A9A-C7BE837C6A0E"
+    data-position="bottom-right"
     data-allow-expand="true"
     data-mode="POPOVER"
-    data-btn-type="badge"
-    data-btn-title="Suporte"
+    data-btn-type="ghost"
+    data-btn-icon="https://api.dicebear.com/9.x/bottts/svg?seed=conversu"
+    data-icon-width="80"
+    data-icon-height="80"
   >
   </div>
   <script type="module" defer="defer" src="conversu.development.js"></script>

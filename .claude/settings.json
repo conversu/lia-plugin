@@ -5,7 +5,10 @@
       "Bash(Select-Object -First 50)",
       "Bash(Format-Table FullName)",
       "Bash(Get-ChildItem -Path \"c:\\\\projetos\\\\conversu\\\\applications\\\\production\\\\lia-plugin\\\\src\" -Recurse -File)",
-      "Bash(Select-Object FullName)"
+      "Bash(Select-Object FullName)",
+      "Bash(Get-ChildItem -Path \"c:\\\\projetos\\\\conversu\\\\applications\\\\production\\\\lia-plugin\" -Recurse -Force)",
+      "Bash(Select-Object -First 30)",
+      "Bash(Format-List FullName)"
     ]
   }
 }
