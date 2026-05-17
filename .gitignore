@@ -28,3 +28,5 @@ yarn-error.log*
 .env.stage
 .env.production
 .env.development
+
+*/.obsidian/*
