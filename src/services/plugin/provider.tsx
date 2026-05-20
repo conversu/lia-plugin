@@ -58,7 +58,7 @@ export function PluginProvider({
     const { isOpen: isTooltipOpen, onClose, onOpen: onTooltipOpen } = useDisclosure();
     const { isOpen: isMaximized, onToggle: onMaximizeToggle, onClose: onMinimize } = useDisclosure();
 
-    const { playSound, prefetch} = useRemoteSoundNotification();
+    const { playSound, prefetch } = useRemoteSoundNotification();
 
     const [notifyTooltip, setNotifyTooltip] = useState<string | null>(null);
 
@@ -79,8 +79,9 @@ export function PluginProvider({
 
     const isShortVersion = window.innerWidth <= 400;
 
-    const yAxisPosition = ['badge'].includes(btnType) ? '0' : '2';
-    const xAxisPosition = isShortVersion ? isExpanded ? isMaximized ? '1' : '0' : '1' : '2';
+    const isGhost = btnType === 'ghost'
+    const yAxisPosition = ['badge', 'ghost'].includes(btnType) ? '0' : '2';
+    const xAxisPosition = isShortVersion ? (isExpanded ? (isMaximized ? '1' : '0') : isGhost ? '0' : '1') : isGhost ? '0' : '2';
 
     function tooltipMessage(v: string) {
         setNotifyTooltip(v);

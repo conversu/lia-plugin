@@ -112,11 +112,13 @@ export default function PopoverButton({
             minH: 32
         },
         'ghost': {
-            minW: img?.width,
-            minH: img?.height
+            width: img?.width || '130px',
+            height: img?.height || '130px',
         }
     }
 
+
+    console.log(imgProps[type])
 
 
     return (
@@ -141,8 +143,8 @@ export default function PopoverButton({
                     bg={tooltipBg || bot.layout.bot.bg}
                     color={tooltipColor || bot.layout.bot.color}
                     gap='.5rem'
-                    mr={type === 'ghost' ? img?.width ? Math.floor(Number(img.width) / 2) : '32px' : '8px'}
-                    mb={type === 'ghost' ? img?.height ? `${Number(img.height) * 1.75}px` : '32px' : undefined}
+                    mr={type === 'ghost' ? imgProps[type]?.width ? Math.floor(Number(imgProps[type].width) / 2) : '32px' : '8px'}
+                    mb={type === 'ghost' ? imgProps[type]?.height ? `${Number(imgProps[type].height) * 1.75}px` : '32px' : undefined}
                 >
                     <Box w='100%' maxW='250px'>
                         {tooltip && tooltip.length > 0 && (
@@ -177,95 +179,88 @@ export default function PopoverButton({
             )}
             {!isExpanded && (
                 type === 'ghost' ? (
-                    <Box mb='1rem'>
-                        <Box
-                            as='button'
-                            id='cp-open-btn'
-                            data-btn-type='ghost'
-                            type='button'
-                            aria-label='Abrir chat'
-                            onClick={onToggle}
-                            sx={{
-                                all: 'unset',
-                                boxSizing: 'border-box',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                width: 'auto',
-                                height: 'auto',
-                                minWidth: 'unset',
-                                minHeight: 'unset',
-                                padding: '0',
-                                margin: '0',
+                    <Box
+                        as='button'
+                        id='cp-open-btn'
+                        data-btn-type='ghost'
+                        type='button'
+                        aria-label='Abrir chat'
+                        onClick={onToggle}
+                        sx={{
+                            all: 'unset',
+                            boxSizing: 'border-box',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            '--ghost-img-w': img?.width || '130px',
+                            '--ghost-img-h': img?.height || '130px',
+                            width: `${img?.width || '130px'} !important`,
+                            height: `${img?.height || '130px'} !important`,
+                            padding: '0',
+                            margin: '0',
+                            background: 'transparent',
+                            backgroundColor: 'transparent',
+                            border: 'none',
+                            borderWidth: '0',
+                            borderStyle: 'none',
+                            borderColor: 'transparent',
+                            borderRadius: '0',
+                            boxShadow: 'none',
+                            outline: 'none',
+                            cursor: 'pointer',
+                            appearance: 'none',
+                            WebkitAppearance: 'none',
+                            _hover: {
                                 background: 'transparent',
                                 backgroundColor: 'transparent',
                                 border: 'none',
-                                borderWidth: '0',
-                                borderStyle: 'none',
-                                borderColor: 'transparent',
-                                borderRadius: '0',
                                 boxShadow: 'none',
                                 outline: 'none',
-                                cursor: 'pointer',
-                                appearance: 'none',
-                                WebkitAppearance: 'none',
-                                _hover: {
-                                    background: 'transparent',
-                                    backgroundColor: 'transparent',
-                                    border: 'none',
-                                    boxShadow: 'none',
-                                    outline: 'none',
-                                    transform: 'none',
-                                },
-                                _focus: {
-                                    background: 'transparent',
-                                    border: 'none',
-                                    boxShadow: 'none',
-                                    outline: 'none',
-                                },
-                                _focusVisible: {
-                                    background: 'transparent',
-                                    border: 'none',
-                                    boxShadow: 'none',
-                                    outline: 'none',
-                                },
-                                _active: {
-                                    background: 'transparent',
-                                    border: 'none',
-                                    boxShadow: 'none',
-                                    outline: 'none',
-                                    transform: 'none',
-                                },
-                            }}
-                        >
-                            <Center w='100%' h='100%'>
-                                {!!icon ? (
-                                    <Img
-                                        w='100%'
-                                        h='100%'
-                                        src={icon}
-                                        minW={img?.width}
-                                        minH={img?.height}
-                                        sx={{
-                                            display: 'block',
-                                            width: 'auto',
-                                            height: 'auto',
-                                            maxWidth: 'none',
-                                            margin: '0',
-                                            padding: '0',
-                                            background: 'transparent',
-                                            border: 'none',
-                                            boxShadow: 'none',
-                                            outline: 'none',
-                                            pointerEvents: 'none',
-                                            userSelect: 'none',
-                                        }}
-                                    />
-                                ) : (
-                                    <Icon as={FiSmile} fontSize='2rem' />
-                                )}
-                            </Center>
-                        </Box>
+                                transform: 'none',
+                            },
+                            _focus: {
+                                background: 'transparent',
+                                border: 'none',
+                                boxShadow: 'none',
+                                outline: 'none',
+                            },
+                            _focusVisible: {
+                                background: 'transparent',
+                                border: 'none',
+                                boxShadow: 'none',
+                                outline: 'none',
+                            },
+                            _active: {
+                                background: 'transparent',
+                                border: 'none',
+                                boxShadow: 'none',
+                                outline: 'none',
+                                transform: 'none',
+                            },
+                        }}
+                    >
+                        <Center w='100%' h='100%'>
+                            {!!icon ? (
+                                <Img
+                                    src={icon}
+                                    sx={{
+                                        display: 'block',
+                                        width: `${imgProps[type].width} !important`,
+                                        height: `${imgProps[type].height} !important`,
+                                        margin: '0',
+                                        padding: '0',
+                                        background: 'transparent',
+                                        border: 'none',
+                                        boxShadow: 'none',
+                                        outline: 'none',
+                                        pointerEvents: 'none',
+                                        userSelect: 'none',
+                                    }}
+                                />
+                            ) : (
+                                <Icon as={FiSmile} fontSize='2rem' />
+                            )}
+                        </Center>
                     </Box>
                 ) : (
                     <Button

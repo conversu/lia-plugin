@@ -79,11 +79,22 @@ export function ThemeProvider({
                     transform: none !important;
                 }
 
+                #conversu-plugin button#cp-open-btn[data-btn-type="circle"],
+                #conversu-plugin button#cp-open-btn[data-btn-type="circle"]:hover,
+                #conversu-plugin button#cp-open-btn[data-btn-type="circle"]:focus,
+                #conversu-plugin button#cp-open-btn[data-btn-type="circle"]:focus-visible,
+                #conversu-plugin button#cp-open-btn[data-btn-type="circle"]:active {
+                    border-radius: 9999px !important;
+                    border: none !important;
+                    transform: none !important;
+                }
+
                 #conversu-plugin button#cp-open-btn[data-btn-type="ghost"] img {
                     display: block !important;
-                    width: auto !important;
-                    height: auto !important;
-                    max-width: none !important;
+                    width: var(--ghost-img-w, 130px) !important;
+                    height: var(--ghost-img-h, 130px) !important;
+                    max-width: var(--ghost-img-w, 130px) !important;
+                    max-height: var(--ghost-img-h, 130px) !important;
                     margin: 0 !important;
                     padding: 0 !important;
                     background: transparent !important;
